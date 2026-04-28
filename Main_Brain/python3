@@ -1,0 +1,3 @@
+#!/bin/bash
+# Wrapper script to use the virtual environment Python
+exec /Users/abhi/Documents/Nspark/Suzlon_Copilot_Main_Brain/.venv/bin/python "$@"

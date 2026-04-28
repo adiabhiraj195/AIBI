@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "CSV Knowledge Base API",
+		"description": "Complete API collection for CSV Upload and Knowledge Base system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/health",
+					"host": ["{{baseUrl}}"],
+					"path": ["health"]
+				}
+			}
+		},
+		{
+			"name": "Root Info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/",
+					"host": ["{{baseUrl}}"]
+				}
+			}
+		},
+		{
+			"name": "Upload Single CSV",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/upload-single",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "upload-single"]
+				}
+			}
+		},
+		{
+			"name": "Upload Multiple CSV",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/upload-multiple",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "upload-multiple"]
+				}
+			}
+		},
+		{
+			"name": "Get Document by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/document?id=1&include_full_data=false",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "document"],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "include_full_data",
+							"value": "false"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "List All Documents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/documents?limit=10&offset=0",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "documents"],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Update Description Status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/document/1/description-status?is_described=true",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "document", "1", "description-status"],
+					"query": [
+						{
+							"key": "is_described",
+							"value": "true"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Delete Document",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/document/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "document", "1"]
+				}
+			}
+		},
+		{
+			"name": "Extract Column Info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/metadata/extract/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "metadata", "extract", "1"]
+				}
+			}
+		},
+		{
+			"name": "Save Complete Metadata",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"document_id\": 1,\n  \"columns\": [\n    {\n      \"column_name\": \"date\",\n      \"data_type\": \"date\",\n      \"connection_key\": \"date_key\",\n      \"alias\": \"transaction_date\",\n      \"description\": \"Date when the transaction occurred\"\n    },\n    {\n      \"column_name\": \"amount\",\n      \"data_type\": \"float\",\n      \"connection_key\": null,\n      \"alias\": \"transaction_amount\",\n      \"description\": \"Monetary value of the transaction in USD\"\n    }\n  ]\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/metadata/save",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "metadata", "save"]
+				}
+			}
+		},
+		{
+			"name": "Get Saved Metadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/metadata/document/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "metadata", "document", "1"]
+				}
+			}
+		},
+		{
+			"name": "Process with AI",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/metadata/process/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "metadata", "process", "1"]
+				}
+			}
+		},
+		{
+			"name": "Get Knowledge Base Entry",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/metadata/knowledge-base/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "metadata", "knowledge-base", "1"]
+				}
+			}
+		},
+		{
+			"name": "List Knowledge Base",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/metadata/knowledge-base?limit=20&offset=0",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "metadata", "knowledge-base"],
+					"query": [
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Search Knowledge Base",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/metadata/knowledge-base/search?query=sales&limit=10",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "v1", "metadata", "knowledge-base", "search"],
+					"query": [
+						{
+							"key": "query",
+							"value": "sales"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000"
+		}
+	]
+}

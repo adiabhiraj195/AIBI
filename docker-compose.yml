@@ -1,0 +1,211 @@
+version: '3.9'
+ 
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  # PostgreSQL Database - Shared by both backend services
+  database:
+    image: postgres:16-alpine
+    container_name: suzlon-database
+    environment:
+      POSTGRES_DB: ${DB_NAME:-Suzlon_Backend}
+      POSTGRES_USER: ${DB_USER:-suzlon_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-suzlon_password}
+    volumes:
+      # Persist database data
+      - postgres_data:/var/lib/postgresql/data
+      # Initialize database with schema if exists
+      - ./Suzlon_backend/database_schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - suzlon-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-suzlon_user} -d ${DB_NAME:-Suzlon_Backend}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    logging: *default-logging
+
+  prisma-studio:
+    image: node:lts
+    container_name: suzlon-prisma-studio
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "cd Suzlon_backend && npx prisma studio --port 5555 --browser none --url 'postgresql://suzlon_user:suzlon_password@database:5432/Suzlon_Backend?schema=public'"
+    ports:
+      - "5555:5555"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - suzlon-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5555" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging: *default-logging
+
+  # Redis - For conversation memory and caching
+  redis:
+    image: redis:7-alpine
+    container_name: suzlon-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - suzlon-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    logging: *default-logging
+
+  # Backend 1: Suzlon_Backend (CSV API)
+  backend-csv:
+    build:
+      context: ./Suzlon_backend
+      dockerfile: Dockerfile
+    container_name: suzlon-backend-csv
+    environment:
+      # Database configuration
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-Suzlon_Backend}
+      DB_USER: ${DB_USER:-suzlon_user}
+      DB_PASSWORD: ${DB_PASSWORD:-suzlon_password}
+      DATABASE_URL: postgresql://${DB_USER:-suzlon_user}:${DB_PASSWORD:-suzlon_password}@database:5432/${DB_NAME:-Suzlon_Backend}
+      
+      # Supabase (if still needed for auth/storage)
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY}
+      
+      # LLM Configuration
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      GROQ_MODEL: ${GROQ_MODEL:-llama-3.1-8b-instant}
+      
+      # Application
+      DEBUG: ${DEBUG:-false}
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "8001:8001"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - suzlon-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8001/docs" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: *default-logging
+
+  # Backend 2: Suzlon_Copilot_Main_Brain (Multi-Agent RAG)
+  backend-brain:
+    build:
+      context: ./Suzlon_Copilot_Main_Brain
+      dockerfile: Dockerfile
+    container_name: suzlon-backend-brain
+    environment:
+      # Database configuration - SHARED with backend-csv
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-Suzlon_Backend}
+      DB_USER: ${DB_USER:-suzlon_user}
+      DB_PASSWORD: ${DB_PASSWORD:-suzlon_password}
+      DB_SSL_MODE: disable
+      
+      # Redis configuration
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: ${REDIS_DB:-0}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      
+      # LLM Configuration
+      LLM_API_KEY: ${LLM_API_KEY}
+      LLM_MODEL: ${LLM_MODEL:-meta-llama/llama-3.3-70b-instruct:free}
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
+      LLM_TEMPERATURE: ${LLM_TEMPERATURE:-0.1}
+      LLM_MAX_TOKENS: ${LLM_MAX_TOKENS:-2000}
+      
+      # RAG Configuration
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-mpnet-base-v2}
+      MAX_RETRIEVAL_DOCS: ${MAX_RETRIEVAL_DOCS:-10}
+      SIMILARITY_THRESHOLD: ${SIMILARITY_THRESHOLD:-0.7}
+      
+      # Application
+      HOST: 0.0.0.0
+      PORT: 8000
+      DEBUG: ${DEBUG:-false}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "8000:8000"
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - suzlon-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/docs" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging: *default-logging
+
+  # Frontend: React SPA served via Nginx
+  frontend:
+    build:
+      context: ./Suzlon_Copilot_Frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=/api/brain
+        - VITE_CSV_API_URL=/api/csv
+    container_name: suzlon-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend-csv
+      - backend-brain
+    networks:
+      - suzlon-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging: *default-logging
+
+  # Removed duplicate prisma-studio service (consolidated above)
+
+networks:
+  # Shared network for all services
+  suzlon-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

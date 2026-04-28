@@ -1,0 +1,731 @@
+{
+	"info": {
+		"_postman_id": "csv-knowledge-base-api",
+		"name": "CSV Knowledge Base API",
+		"description": "Complete collection for testing the CSV Upload and Knowledge Base API with AI-powered metadata analysis.\n\n## 🚀 Features Tested\n- CSV file upload (single & multiple)\n- Document management\n- Column metadata extraction\n- AI-powered knowledge base creation\n- Search and discovery\n\n## 📋 Prerequisites\n1. Start the API server: `python main.py`\n2. Ensure environment variables are configured\n3. Have a sample CSV file ready for upload\n\n## 🔄 Recommended Test Flow\n1. Health Check\n2. Upload CSV File\n3. Extract Column Metadata\n4. Save Enriched Metadata\n5. Process with AI\n6. Query Knowledge Base\n7. Search & List Operations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health & System",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check API health and database connection status"
+					}
+				},
+				{
+					"name": "Root Endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Get API information and available endpoints"
+					}
+				}
+			],
+			"description": "System health and information endpoints"
+		},
+		{
+			"name": "CSV Upload & Management",
+			"item": [
+				{
+					"name": "Upload Single CSV File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test response status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test response structure",
+									"pm.test(\"Response has correct structure\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('success');",
+									"    pm.expect(jsonData).to.have.property('data');",
+									"    pm.expect(jsonData.data).to.be.an('array');",
+									"});",
+									"",
+									"// Save document ID for other requests",
+									"if (pm.response.code === 200) {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.length > 0) {",
+									"        pm.environment.set(\"document_id\", jsonData.data[0].id);",
+									"        pm.environment.set(\"filename\", jsonData.data[0].filename);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": [],
+									"description": "Select a CSV file to upload"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/upload-single",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"upload-single"
+							]
+						},
+						"description": "Upload a single CSV file and get preview data. This will save the document_id for use in other requests."
+					}
+				},
+				{
+					"name": "Upload Multiple CSV Files",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [],
+									"description": "Select first CSV file"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": [],
+									"description": "Select second CSV file"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/upload-multiple",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"upload-multiple"
+							]
+						},
+						"description": "Upload multiple CSV files at once"
+					}
+				},
+				{
+					"name": "Get Document by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/document?id={{document_id}}&include_full_data=false",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{document_id}}",
+									"description": "Document ID from upload response"
+								},
+								{
+									"key": "include_full_data",
+									"value": "false",
+									"description": "Set to true to include full CSV data"
+								}
+							]
+						},
+						"description": "Get document details by ID. Use include_full_data=true to get complete CSV data."
+					}
+				},
+				{
+					"name": "Get Document with Full Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/document?id={{document_id}}&include_full_data=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{document_id}}"
+								},
+								{
+									"key": "include_full_data",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Get document with complete CSV data included"
+					}
+				},
+				{
+					"name": "List All Documents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/documents?limit=10&offset=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"documents"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Maximum number of documents to return (1-1000)"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "Number of documents to skip for pagination"
+								}
+							]
+						},
+						"description": "List all uploaded documents with pagination"
+					}
+				},
+				{
+					"name": "Update Description Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/document/{{document_id}}/description-status?is_described=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"{{document_id}}",
+								"description-status"
+							],
+							"query": [
+								{
+									"key": "is_described",
+									"value": "true",
+									"description": "Set description status (true/false)"
+								}
+							]
+						},
+						"description": "Update the description status of a document"
+					}
+				},
+				{
+					"name": "Delete Document",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/document/{{document_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"{{document_id}}"
+							]
+						},
+						"description": "Delete a document from the database. ⚠️ Use with caution!"
+					}
+				}
+			],
+			"description": "CSV file upload and document management endpoints"
+		},
+		{
+			"name": "Metadata & Knowledge Base",
+			"item": [
+				{
+					"name": "Extract Column Info for Form",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test response status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Save column info for metadata form",
+									"if (pm.response.code === 200) {",
+									"    const jsonData = pm.response.json();",
+									"    pm.environment.set(\"column_info\", JSON.stringify(jsonData.columns));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/extract/{{document_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"extract",
+								"{{document_id}}"
+							]
+						},
+						"description": "Extract column information for frontend metadata form. This provides column names, data types, and sample data."
+					}
+				},
+				{
+					"name": "Save Complete Metadata",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate sample metadata based on extracted columns",
+									"const columnInfo = pm.environment.get(\"column_info\");",
+									"if (columnInfo) {",
+									"    const columns = JSON.parse(columnInfo);",
+									"    const enrichedColumns = columns.map((col, index) => ({",
+									"        column_name: col.column_name,",
+									"        data_type: col.data_type,",
+									"        connection_key: index % 2 === 0 ? `conn_key_${index + 1}` : null,",
+									"        alias: `alias_${col.column_name.toLowerCase().replace(/\\s+/g, '_')}`,",
+									"        description: `This column represents ${col.column_name.toLowerCase()} data with ${col.data_type} values. Used for business analysis and reporting.`",
+									"    }));",
+									"    ",
+									"    const payload = {",
+									"        document_id: parseInt(pm.environment.get(\"document_id\")),",
+									"        columns: enrichedColumns",
+									"    };",
+									"    ",
+									"    pm.environment.set(\"metadata_payload\", JSON.stringify(payload));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"document_id\": {{document_id}},\n  \"columns\": [\n    {\n      \"column_name\": \"date\",\n      \"data_type\": \"date\",\n      \"connection_key\": \"date_key\",\n      \"alias\": \"transaction_date\",\n      \"description\": \"Date when the transaction occurred, used for temporal analysis and reporting\"\n    },\n    {\n      \"column_name\": \"amount\",\n      \"data_type\": \"float\",\n      \"connection_key\": null,\n      \"alias\": \"transaction_amount\",\n      \"description\": \"Monetary value of the transaction in USD, critical for financial analysis\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/save",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"save"
+							]
+						},
+						"description": "Save complete metadata with user-provided information. Update the request body with actual column data from your CSV."
+					}
+				},
+				{
+					"name": "Get Saved Metadata",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/document/{{document_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"document",
+								"{{document_id}}"
+							]
+						},
+						"description": "Get previously saved document metadata"
+					}
+				},
+				{
+					"name": "Process with AI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test response status",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Save knowledge base ID",
+									"if (pm.response.code === 200) {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.knowledge_base_id) {",
+									"        pm.environment.set(\"knowledge_base_id\", jsonData.knowledge_base_id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/process/{{document_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"process",
+								"{{document_id}}"
+							]
+						},
+						"description": "Process document metadata with AI and create knowledge base entry. Requires saved metadata first."
+					}
+				},
+				{
+					"name": "Get Knowledge Base Entry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/knowledge-base/{{document_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"knowledge-base",
+								"{{document_id}}"
+							]
+						},
+						"description": "Get complete knowledge base entry for a document with AI analysis results"
+					}
+				},
+				{
+					"name": "List Knowledge Base Entries",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/knowledge-base?limit=20&offset=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"knowledge-base"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Number of entries to return (1-100)"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "Number of entries to skip for pagination"
+								}
+							]
+						},
+						"description": "List all knowledge base entries with summary information for dashboard display"
+					}
+				},
+				{
+					"name": "Search Knowledge Base",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/knowledge-base/search?query=sales&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"knowledge-base",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "sales",
+									"description": "Search query string"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Maximum number of results (1-50)"
+								}
+							]
+						},
+						"description": "Search knowledge base entries by filename, summary, or category"
+					}
+				},
+				{
+					"name": "Delete Knowledge Base Entry",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/knowledge-base/{{knowledge_base_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"knowledge-base",
+								"{{knowledge_base_id}}"
+							]
+						},
+						"description": "Delete a knowledge base entry. ⚠️ Use with caution!"
+					}
+				}
+			],
+			"description": "Metadata extraction, AI processing, and knowledge base management"
+		},
+		{
+			"name": "Legacy Endpoints",
+			"item": [
+				{
+					"name": "Upload CSV Files (Deprecated)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [],
+									"description": "CSV file(s) to upload"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/upload",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"upload"
+							]
+						},
+						"description": "⚠️ DEPRECATED: Use /upload-single for single file or /upload-multiple for multiple files"
+					}
+				},
+				{
+					"name": "Extract Column Metadata (Old)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/document/{{document_id}}/columns",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"document",
+								"{{document_id}}",
+								"columns"
+							]
+						},
+						"description": "Legacy endpoint for column metadata extraction. Use /metadata/extract/{id} instead."
+					}
+				},
+				{
+					"name": "Save Document Metadata (Old)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"document_id\": {{document_id}},\n  \"columns\": [\n    {\n      \"column_name\": \"example_column\",\n      \"data_type\": \"string\",\n      \"connection_key\": \"key_1\",\n      \"alias\": \"example_alias\",\n      \"description\": \"Example column description\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/document/save",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"document",
+								"save"
+							]
+						},
+						"description": "Legacy endpoint for saving metadata. Use /metadata/save instead."
+					}
+				},
+				{
+					"name": "Analyze with LLM (Old)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/metadata/document/{{document_id}}/analyze",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"metadata",
+								"document",
+								"{{document_id}}",
+								"analyze"
+							]
+						},
+						"description": "Legacy endpoint for LLM analysis. Use /metadata/process/{id} instead."
+					}
+				}
+			],
+			"description": "Legacy endpoints for backward compatibility"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Set base URL if not already set",
+					"if (!pm.environment.get(\"base_url\")) {",
+					"    pm.environment.set(\"base_url\", \"http://localhost:8000\");",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global test for response time",
+					"pm.test(\"Response time is less than 10 seconds\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(10000);",
+					"});",
+					"",
+					"// Log response for debugging",
+					"if (pm.response.code >= 400) {",
+					"    console.log(\"Error Response:\", pm.response.text());",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "document_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "knowledge_base_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "filename",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

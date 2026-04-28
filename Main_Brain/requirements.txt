@@ -1,0 +1,57 @@
+# Core Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart>=0.0.6
+
+# Database and Vector Store
+psycopg2-binary==2.9.9
+pgvector==0.2.4
+asyncpg==0.29.0
+redis==5.0.1
+
+# LangChain Ecosystem (Multi-Agent Orchestration)
+langchain==0.2.16
+langchain-community==0.2.16
+langchain-core==0.2.39
+langchain-openai==0.1.23
+
+# LlamaIndex Ecosystem (Advanced RAG)
+llama-index==0.11.20
+llama-index-core==0.11.20
+llama-index-embeddings-huggingface==0.3.1
+llama-index-llms-openai==0.2.16
+llama-index-vector-stores-postgres==0.2.6
+
+# Machine Learning & Data Science
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.7.2
+xgboost==3.1.1
+prophet==1.2.1
+tqdm==4.67.1
+
+# Deep Learning & Embeddings
+torch==2.3.1
+sentence-transformers==2.7.0
+transformers==4.44.2
+
+# Visualization
+plotly==5.17.0
+
+# Configuration & Environment
+python-dotenv==1.0.1
+pydantic==2.12.4
+pydantic-settings==2.11.0
+
+# HTTP Client & Async I/O
+httpx==0.28.1
+aiofiles==25.1.0
+requests==2.32.3
+
+# Logging
+structlog==23.2.0
+
+# Testing (Development)
+pytest==8.3.2
+pytest-asyncio==0.23.8
+pytest-cov==7.0.0
