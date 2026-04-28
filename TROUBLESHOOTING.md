@@ -1,6 +1,6 @@
 # Troubleshooting Guide 🔧
 
-Quick solutions to common issues when running Suzlon services.
+Quick solutions to common issues when running AIBI services.
 
 ---
 
@@ -105,10 +105,10 @@ cat .env | grep DB_
 5. **Test connection from host:**
 ```bash
 # From your Mac (requires psql installed)
-psql -h localhost -U suzlon_user -d Suzlon_Backend
+psql -h localhost -U AIBI_user -d AIBI_Backend
 
 # If psql not installed, use Docker:
-docker compose exec database psql -U suzlon_user -d Suzlon_Backend
+docker compose exec database psql -U AIBI_user -d AIBI_Backend
 ```
 
 ---
@@ -125,7 +125,7 @@ docker compose exec database psql -U suzlon_user -d Suzlon_Backend
 docker compose exec backend-csv env | grep DB_NAME
 docker compose exec backend-brain env | grep DB_NAME
 
-# Both should output: DB_NAME=Suzlon_Backend
+# Both should output: DB_NAME=AIBI_Backend
 ```
 
 ---
@@ -150,7 +150,7 @@ curl http://localhost:8000/docs
 2. **Check frontend .env:**
 ```bash
 # VITE_API_URL should point to backend
-cat Suzlon_Copilot_Frontend/.env | grep VITE_API_URL
+cat AIBI_Copilot_Frontend/.env | grep VITE_API_URL
 ```
 
 3. **Clear browser cache:**
@@ -265,13 +265,13 @@ pgvector extension not found
 
 1. **Check pgvector is installed:**
 ```bash
-docker compose exec database psql -U suzlon_user -d Suzlon_Backend \
+docker compose exec database psql -U AIBI_user -d AIBI_Backend \
   -c "SELECT * FROM pg_extension WHERE extname = 'vector';"
 ```
 
 2. **Install pgvector extension:**
 ```bash
-docker compose exec database psql -U suzlon_user -d Suzlon_Backend \
+docker compose exec database psql -U AIBI_user -d AIBI_Backend \
   -c "CREATE EXTENSION IF NOT EXISTS vector;"
 ```
 
@@ -395,11 +395,11 @@ docker compose ps
 Expected output:
 ```
 NAME                 STATUS           HEALTH
-suzlon-database      Up               (healthy)
-suzlon-redis         Up               (healthy)
-suzlon-backend-csv   Up 2m            (healthy)
-suzlon-backend-brain Up 2m            (healthy)
-suzlon-frontend      Up 1m            (healthy)
+AIBI-database      Up               (healthy)
+AIBI-redis         Up               (healthy)
+AIBI-backend-csv   Up 2m            (healthy)
+AIBI-backend-brain Up 2m            (healthy)
+AIBI-frontend      Up 1m            (healthy)
 ```
 
 ### View real-time logs
@@ -424,7 +424,7 @@ docker stats
 
 **PostgreSQL:**
 ```bash
-docker compose exec database psql -U suzlon_user -d Suzlon_Backend
+docker compose exec database psql -U AIBI_user -d AIBI_Backend
 ```
 
 **Redis:**
@@ -451,7 +451,7 @@ curl http://localhost:8001/docs
 curl http://localhost:8000/docs
 
 # Database
-docker compose exec database pg_isready -U suzlon_user
+docker compose exec database pg_isready -U AIBI_user
 
 # Redis
 docker compose exec redis redis-cli PING
@@ -478,23 +478,23 @@ curl -X POST http://localhost:8001/api/files/upload \
 ### Backup database
 ```bash
 docker compose exec database pg_dump \
-  -U suzlon_user \
-  Suzlon_Backend > backup.sql
+  -U AIBI_user \
+  AIBI_Backend > backup.sql
 ```
 
 ### Restore database
 ```bash
 docker compose exec -T database psql \
-  -U suzlon_user \
-  Suzlon_Backend < backup.sql
+  -U AIBI_user \
+  AIBI_Backend < backup.sql
 ```
 
 ### Check database size
 ```bash
 docker compose exec database psql \
-  -U suzlon_user \
-  -d Suzlon_Backend \
-  -c "SELECT pg_size_pretty(pg_database_size('Suzlon_Backend'))"
+  -U AIBI_user \
+  -d AIBI_Backend \
+  -c "SELECT pg_size_pretty(pg_database_size('AIBI_Backend'))"
 ```
 
 ---

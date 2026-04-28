@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# Suzlon_Copilot_Frontend
+# AIBI_Copilot_Frontend
 This is the Front-end Directory of Copilot
 =======
 

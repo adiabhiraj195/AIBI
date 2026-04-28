@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ============================================================
-# Suzlon Multi-Service Docker Startup Script
+# AIBI Multi-Service Docker Startup Script
 # Quick start for all services with helpful diagnostics
 # ============================================================
 
@@ -11,7 +11,7 @@ PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ENV_FILE="$PROJECT_DIR/.env"
 ENV_EXAMPLE="$PROJECT_DIR/.env.example"
 
-echo "🚀 Suzlon Multi-Service Setup"
+echo "🚀 AIBI Multi-Service Setup"
 echo "=============================="
 echo ""
 
@@ -57,7 +57,7 @@ GROQ_API_KEY=$(grep -E "^GROQ_API_KEY=" "$ENV_FILE" | cut -d= -f2 | tr -d '\r')
 # Validate critical configuration
 MISSING_VARS=()
 
-if [ -z "$DB_PASSWORD" ] || [ "$DB_PASSWORD" = "suzlon_password_change_me_in_production" ]; then
+if [ -z "$DB_PASSWORD" ] || [ "$DB_PASSWORD" = "AIBI_password_change_me_in_production" ]; then
     MISSING_VARS+=("DB_PASSWORD")
 fi
 

@@ -1,6 +1,6 @@
 # 🚀 Quick Start Guide
 
-Get Suzlon running in 5 minutes.
+Get AIBI running in 5 minutes.
 
 ---
 
@@ -77,7 +77,7 @@ curl http://localhost:3000
 
 ## ✅ You're Done!
 
-Both backends are now connected to the same database (`Suzlon_Backend`) and ready to use.
+Both backends are now connected to the same database (`AIBI_Backend`) and ready to use.
 
 ---
 

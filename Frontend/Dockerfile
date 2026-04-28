@@ -1,4 +1,4 @@
-# Multi-stage build for Suzlon_Copilot_Frontend (React + Vite)
+# Multi-stage build for AIBI_Copilot_Frontend (React + Vite)
 # Optimized SPA with minimal runtime image
 
 # Stage 1: Builder

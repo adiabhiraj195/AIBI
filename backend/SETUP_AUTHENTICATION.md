@@ -2,7 +2,7 @@
 
 ## ✅ Implementation Status: COMPLETE
 
-A production-ready database-based authentication system has been successfully implemented for your Suzlon backend application.
+A production-ready database-based authentication system has been successfully implemented for your AIBI backend application.
 
 ---
 
@@ -273,7 +273,7 @@ async def upload_csv(
 ### `.env` Settings
 ```env
 # Database (already configured)
-DATABASE_URL=postgresql://suzlon_user:suzlon_password@localhost:5432/Suzlon_Backend
+DATABASE_URL=postgresql://AIBI_user:AIBI_password@localhost:5432/AIBI_Backend
 
 # JWT Authentication
 JWT_SECRET_KEY=change-this-in-production

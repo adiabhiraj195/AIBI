@@ -9,12 +9,12 @@ class Settings(BaseSettings):
     supabase_service_key: Optional[str] = None
     
     # Shared PostgreSQL Database Configuration (replaces Supabase for multi-backend setup)
-    database_url: Optional[str] = None  # Connection string: postgresql://user:password@database:5432/Suzlon_Backend
+    database_url: Optional[str] = None  # Connection string: postgresql://user:password@database:5432/AIBI_Backend
     db_host: str = "database"  # Use 'database' for Docker, localhost for local dev
     db_port: int = 5432
-    db_name: str = "Suzlon_Backend"
-    db_user: str = "suzlon_user"
-    db_password: str = "suzlon_password"
+    db_name: str = "AIBI_Backend"
+    db_user: str = "AIBI_user"
+    db_password: str = "AIBI_password"
     db_pool_size: int = 10
     db_max_overflow: int = 20
 

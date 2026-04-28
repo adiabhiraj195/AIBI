@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This is a **conversational AI chatbot interface** for Suzlon Wind Energy's CFO operations. It provides natural language querying of financial and operational data through a **multi-agent AI system** powered by LangGraph, RAG (pgvector embeddings), and ML models (Prophet + XGBoost).
+This is a **conversational AI chatbot interface** for AIBI Wind Energy's CFO operations. It provides natural language querying of financial and operational data through a **multi-agent AI system** powered by LangGraph, RAG (pgvector embeddings), and ML models (Prophet + XGBoost).
 
 **Current Status:** ✅ Frontend 100% Integration-Ready | ⏳ Backend Development Needed
 
@@ -171,7 +171,7 @@ This is a **conversational AI chatbot interface** for Suzlon Wind Energy's CFO o
 │  │         ML Models (Prophet + XGBoost)                 │  │
 │  │  • Prophet: Time-series capacity forecasting         │  │
 │  │  • XGBoost: What-if scenario modeling                │  │
-│  │  • Pre-trained on Suzlon historical data             │  │
+│  │  • Pre-trained on AIBI historical data             │  │
 │  └──────────────────────────────────────────────────────┘  │
 │                                                              │
 │  ┌──────────────────────────────────────────────────────┐  │

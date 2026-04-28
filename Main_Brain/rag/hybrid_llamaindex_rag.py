@@ -152,7 +152,7 @@ class HybridLlamaIndexRAG:
             
             # Create custom prompt template for wind turbine domain
             qa_prompt_template = PromptTemplate(
-                """You are a specialized AI assistant for Suzlon's wind turbine project data analysis. 
+                """You are a specialized AI assistant for AIBI's wind turbine project data analysis. 
                 You have access to comprehensive project data including capacity, customer information, 
                 business modules, states, project phases, and financial metrics.
 

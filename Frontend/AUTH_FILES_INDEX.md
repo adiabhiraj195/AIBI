@@ -3,7 +3,7 @@
 ## 📁 Project Structure
 
 ```
-Suzlon_Copilot_Frontend/
+AIBI_Copilot_Frontend/
 │
 ├── 📄 AUTH_IMPLEMENTATION_SUMMARY.md       ← START HERE (Overview)
 ├── 📄 AUTH_QUICK_REFERENCE.md              ← Quick API reference

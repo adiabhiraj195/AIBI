@@ -87,7 +87,7 @@ async def test_database_migration():
             
             # Check sync state entry
             sync_state = await conn.fetchrow(
-                "SELECT * FROM data_sync_state WHERE service_name = 'suzlon-copilot-main-brain'"
+                "SELECT * FROM data_sync_state WHERE service_name = 'AIBI-copilot-main-brain'"
             )
             
             if not sync_state:
@@ -208,7 +208,7 @@ def test_file_structure():
         ("main.py", "Main application file"),
     ]
     
-    base_path = "/Users/abhi/Documents/Nspark/Suzlon_Copilot_Main_Brain"
+    base_path = "/Users/abhi/Documents/Nspark/AIBI_Copilot_Main_Brain"
     all_exist = True
     
     for file_path, description in required_files:

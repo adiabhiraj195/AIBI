@@ -1,7 +1,7 @@
 # Frontend API Routing Update - Port 8001 Configuration
 
 ## Summary
-Updated the Suzlon_Copilot_Frontend to call the CSV backend API (port 8001) for file upload, document management, and feedback operations, while keeping conversation/query APIs on port 8000 (Main Brain).
+Updated the AIBI_Copilot_Frontend to call the CSV backend API (port 8001) for file upload, document management, and feedback operations, while keeping conversation/query APIs on port 8000 (Main Brain).
 
 ## Changes Made
 

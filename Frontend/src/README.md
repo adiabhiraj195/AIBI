@@ -1,6 +1,6 @@
 # CFO Multi-Agent Chatbot - Frontend
 
-> Intelligent financial analysis chatbot for Suzlon Wind Energy using LangGraph multi-agent AI system
+> Intelligent financial analysis chatbot for AIBI Wind Energy using LangGraph multi-agent AI system
 
 ![Status](https://img.shields.io/badge/Status-Ready%20for%20Testing-green)
 ![Backend](https://img.shields.io/badge/Backend-Integrated-blue)
@@ -33,7 +33,7 @@ npm run dev
 
 ## 📊 What This Does
 
-This is a conversational AI assistant for CFO-level financial analysis of Suzlon Wind Energy's turbine operations:
+This is a conversational AI assistant for CFO-level financial analysis of AIBI Wind Energy's turbine operations:
 
 - **Natural Language Queries:** Ask questions in plain English
 - **Multi-Agent Processing:** 5 specialized AI agents (Orchestrator, Visualization, Insights, Forecasting, Follow-up)
@@ -164,7 +164,7 @@ npm run dev
 
 ### Backend Integration
 - **FastAPI** - REST API
-- **PostgreSQL** - Database (Suzlon E3/E4 turbine data)
+- **PostgreSQL** - Database (AIBI E3/E4 turbine data)
 - **Redis** - Session storage
 - **LangGraph** - Multi-agent orchestration
 - **LangChain** - Agent framework
@@ -454,7 +454,7 @@ Copy `.env.example` to `.env` and customize.
 
 ## 📄 License
 
-Proprietary - Suzlon Wind Energy
+Proprietary - AIBI Wind Energy
 
 ---
 
@@ -482,6 +482,6 @@ For questions or issues:
 
 ---
 
-**Built with ❤️ for Suzlon Wind Energy**
+**Built with ❤️ for AIBI Wind Energy**
 
 *Empowering CFO-level insights through conversational AI*

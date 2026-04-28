@@ -5,7 +5,7 @@
 
 ## Quick Overview
 
-Successfully migrated the entire Suzlon CSV Backend from raw `psycopg2` SQL queries to **SQLAlchemy 2.0 ORM**.
+Successfully migrated the entire AIBI CSV Backend from raw `psycopg2` SQL queries to **SQLAlchemy 2.0 ORM**.
 
 ### What Was Done
 
@@ -173,7 +173,7 @@ curl -X POST http://localhost:8001/api/v1/upload-single \
 
 ## Summary
 
-The Suzlon CSV Backend has been **successfully and completely migrated to SQLAlchemy 2.0 ORM**. All database operations now use the modern ORM layer instead of hardcoded SQL queries, providing better maintainability, type safety, and security.
+The AIBI CSV Backend has been **successfully and completely migrated to SQLAlchemy 2.0 ORM**. All database operations now use the modern ORM layer instead of hardcoded SQL queries, providing better maintainability, type safety, and security.
 
 **All validation tests pass. ✅ Ready for production!**
 

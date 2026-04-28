@@ -1,4 +1,4 @@
-# Multi-stage build for Suzlon_Backend (CSV API)
+# Multi-stage build for AIBI_Backend (CSV API)
 # Optimized FastAPI service for CSV upload, preview, and database operations
 
 # Stage 1: Builder

@@ -1,4 +1,4 @@
-# Suzlon Multi-Service Architecture 🏗️
+# AIBI Multi-Service Architecture 🏗️
 
 Complete, production-ready setup for running three services with shared database architecture.
 
@@ -11,13 +11,13 @@ This repository contains:
    - Real-time conversation interface
    - Visualization and analytics
 
-2. **Backend A**: Suzlon_Backend (Port 8001)
+2. **Backend A**: AIBI_Backend (Port 8001)
    - FastAPI CSV Upload & Processing API
    - File management and preview
    - Knowledge base management
    - Groq AI integration for CSV analysis
 
-3. **Backend B**: Suzlon_Copilot_Main_Brain (Port 8000)
+3. **Backend B**: AIBI_Copilot_Main_Brain (Port 8000)
    - FastAPI Multi-Agent RAG System
    - CFO-grade financial insights
    - LangChain + LlamaIndex orchestration
@@ -25,7 +25,7 @@ This repository contains:
    - pgvector embeddings
 
 4. **Database**: PostgreSQL (Port 5432)
-   - Single shared database: `Suzlon_Backend`
+   - Single shared database: `AIBI_Backend`
    - Both backends connect to the same instance
    - pgvector extension for embeddings
 
@@ -81,7 +81,7 @@ That's it! All services will start in order:
          ▼   ▼
    ┌──────────────────┐
    │  PostgreSQL      │
-   │  Suzlon_Backend  │
+   │  AIBI_Backend  │
    │  (Shared DB)     │
    └──────────────────┘
          ▲
@@ -95,14 +95,14 @@ That's it! All services will start in order:
 
 ### Shared Database Design
 
-Both backend services connect to the **same PostgreSQL instance** with database name `Suzlon_Backend`.
+Both backend services connect to the **same PostgreSQL instance** with database name `AIBI_Backend`.
 
 **Configuration:**
 ```
 Host: database (Docker) or localhost (Local Development)
 Port: 5432
-Database: Suzlon_Backend
-User: suzlon_user (configurable via .env)
+Database: AIBI_Backend
+User: AIBI_user (configurable via .env)
 Password: (set via .env)
 ```
 
@@ -121,7 +121,7 @@ cp .env.example .env
 Key variables:
 ```dotenv
 # Shared database credentials
-DB_USER=suzlon_user
+DB_USER=AIBI_user
 DB_PASSWORD=your_secure_password
 
 # LLM API (for Main Brain)
@@ -139,9 +139,9 @@ DEBUG=false
 
 Each service has its own `.env.example`:
 
-1. **Suzlon_Backend/.env.example** - CSV API config
-2. **Suzlon_Copilot_Main_Brain/.env.example** - Main Brain config
-3. **Suzlon_Copilot_Frontend/.env.example** - Frontend API URLs
+1. **AIBI_Backend/.env.example** - CSV API config
+2. **AIBI_Copilot_Main_Brain/.env.example** - Main Brain config
+3. **AIBI_Copilot_Frontend/.env.example** - Frontend API URLs
 
 When using Docker Compose, these are pulled from the root `.env` automatically.
 
@@ -181,7 +181,7 @@ docker compose exec backend-brain bash
 docker compose exec backend-csv bash
 
 # Database
-docker compose exec database psql -U suzlon_user -d Suzlon_Backend
+docker compose exec database psql -U AIBI_user -d AIBI_Backend
 ```
 
 ### Reset Database
@@ -197,7 +197,7 @@ docker compose up --build
 
 ### Frontend (React + Vite)
 
-**Location:** `Suzlon_Copilot_Frontend/`
+**Location:** `AIBI_Copilot_Frontend/`
 
 **Port:** 3000
 
@@ -221,7 +221,7 @@ GET http://localhost:3000
 
 ### Backend A: CSV API (FastAPI)
 
-**Location:** `Suzlon_Backend/`
+**Location:** `AIBI_Backend/`
 
 **Port:** 8001
 
@@ -232,7 +232,7 @@ GET http://localhost:3000
 - Knowledge base management
 - Supabase integration (optional)
 
-**Database:** Suzlon_Backend (shared)
+**Database:** AIBI_Backend (shared)
 
 **Key Dependencies:**
 - FastAPI
@@ -254,7 +254,7 @@ GET http://localhost:8001/docs
 
 ### Backend B: Multi-Agent RAG (FastAPI)
 
-**Location:** `Suzlon_Copilot_Main_Brain/`
+**Location:** `AIBI_Copilot_Main_Brain/`
 
 **Port:** 8000
 
@@ -266,7 +266,7 @@ GET http://localhost:8001/docs
 - CFO financial insights
 - Feedback system
 
-**Database:** Suzlon_Backend (shared)
+**Database:** AIBI_Backend (shared)
 
 **Redis:** For conversation memory
 
@@ -297,7 +297,7 @@ GET http://localhost:8000/docs
 
 **Port:** 5432
 
-**Database Name:** `Suzlon_Backend`
+**Database Name:** `AIBI_Backend`
 
 **Features:**
 - Alpine Linux image (lightweight)
@@ -307,12 +307,12 @@ GET http://localhost:8000/docs
 
 **Connection String:**
 ```
-postgresql://suzlon_user:password@database:5432/Suzlon_Backend
+postgresql://AIBI_user:password@database:5432/AIBI_Backend
 ```
 
 **Health Check:**
 ```
-pg_isready -U suzlon_user
+pg_isready -U AIBI_user
 ```
 
 ---
@@ -349,16 +349,16 @@ Frontend (3000)
                       (CSV API)
 ```
 
-In Docker, services communicate via service names on the shared `suzlon-network`.
+In Docker, services communicate via service names on the shared `AIBI-network`.
 
 ### Backends → Database
 
 ```
 Backend A (8001)
-    └─→ postgresql://database:5432/Suzlon_Backend
+    └─→ postgresql://database:5432/AIBI_Backend
 
 Backend B (8000)
-    └─→ postgresql://database:5432/Suzlon_Backend
+    └─→ postgresql://database:5432/AIBI_Backend
 ```
 
 Both connect to the same database and table schema.
@@ -382,11 +382,11 @@ docker compose ps
 Expected output:
 ```
 NAME                 IMAGE              STATUS           PORTS
-suzlon-database      postgres:16-alpine Up (healthy)     0.0.0.0:5432->5432/tcp
-suzlon-redis         redis:7-alpine     Up (healthy)     0.0.0.0:6379->6379/tcp
-suzlon-backend-csv   suzlon-backend-csv:latest Up       0.0.0.0:8001->8001/tcp
-suzlon-backend-brain suzlon-backend-brain:latest Up     0.0.0.0:8000->8000/tcp
-suzlon-frontend      suzlon-frontend:latest Up           0.0.0.0:3000->3000/tcp
+AIBI-database      postgres:16-alpine Up (healthy)     0.0.0.0:5432->5432/tcp
+AIBI-redis         redis:7-alpine     Up (healthy)     0.0.0.0:6379->6379/tcp
+AIBI-backend-csv   AIBI-backend-csv:latest Up       0.0.0.0:8001->8001/tcp
+AIBI-backend-brain AIBI-backend-brain:latest Up     0.0.0.0:8000->8000/tcp
+AIBI-frontend      AIBI-frontend:latest Up           0.0.0.0:3000->3000/tcp
 ```
 
 ### Common Issues
@@ -448,7 +448,7 @@ Each FastAPI service exposes interactive docs:
 
 ## 📦 Database Schema
 
-The database initializes automatically using `Suzlon_Backend/database_schema.sql`.
+The database initializes automatically using `AIBI_Backend/database_schema.sql`.
 
 **Key Tables** (Both backends use these):
 - CSV metadata tables (Backend A)
@@ -467,24 +467,24 @@ Build and push images:
 
 ```bash
 # Backend A
-docker build -t your-registry/suzlon-backend:1.0 ./Suzlon_Backend
-docker push your-registry/suzlon-backend:1.0
+docker build -t your-registry/AIBI-backend:1.0 ./AIBI_Backend
+docker push your-registry/AIBI-backend:1.0
 
 # Backend B
-docker build -t your-registry/suzlon-brain:1.0 ./Suzlon_Copilot_Main_Brain
-docker push your-registry/suzlon-brain:1.0
+docker build -t your-registry/AIBI-brain:1.0 ./AIBI_Copilot_Main_Brain
+docker push your-registry/AIBI-brain:1.0
 
 # Frontend
-docker build -t your-registry/suzlon-frontend:1.0 ./Suzlon_Copilot_Frontend
-docker push your-registry/suzlon-frontend:1.0
+docker build -t your-registry/AIBI-frontend:1.0 ./AIBI_Copilot_Frontend
+docker push your-registry/AIBI-frontend:1.0
 ```
 
 ### AWS EC2 / Kubernetes
 
 Refer to:
-- `Suzlon_Backend/SETUP_GUIDE.md`
-- `Suzlon_Copilot_Main_Brain/AWS_EC2_DEPLOYMENT_GUIDE.md`
-- `Suzlon_Copilot_Frontend/AWS_DEPLOYMENT_GUIDE.md`
+- `AIBI_Backend/SETUP_GUIDE.md`
+- `AIBI_Copilot_Main_Brain/AWS_EC2_DEPLOYMENT_GUIDE.md`
+- `AIBI_Copilot_Frontend/AWS_DEPLOYMENT_GUIDE.md`
 
 ### Environment Variables (Production)
 
@@ -530,7 +530,7 @@ curl http://localhost:8001/docs
 curl http://localhost:8000/docs
 
 # Database
-docker compose exec database pg_isready -U suzlon_user
+docker compose exec database pg_isready -U AIBI_user
 
 # Redis
 docker compose exec redis redis-cli ping
@@ -557,9 +557,9 @@ docker compose exec redis redis-cli ping
 ## 🤝 Support
 
 For issues, refer to individual service READMEs:
-- `Suzlon_Backend/README.md`
-- `Suzlon_Copilot_Main_Brain/README.md`
-- `Suzlon_Copilot_Frontend/README.md`
+- `AIBI_Backend/README.md`
+- `AIBI_Copilot_Main_Brain/README.md`
+- `AIBI_Copilot_Frontend/README.md`
 
 ---
 

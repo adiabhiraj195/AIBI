@@ -139,6 +139,6 @@
 
 ---
 
-The Suzlon CSV Backend has been successfully migrated from raw psycopg2 SQL queries to SQLAlchemy 2.0 ORM with comprehensive testing and documentation.
+The AIBI CSV Backend has been successfully migrated from raw psycopg2 SQL queries to SQLAlchemy 2.0 ORM with comprehensive testing and documentation.
 
 **No issues found. Ready to deploy!** 🚀

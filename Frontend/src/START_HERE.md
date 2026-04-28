@@ -403,7 +403,7 @@ curl http://localhost:8000/api/user/demo_user/sessions
 
 The frontend is fully integrated with your backend and ready to test.
 
-**Start both servers and begin querying your Suzlon financial data!**
+**Start both servers and begin querying your AIBI financial data!**
 
 ```bash
 # Terminal 1: Backend
@@ -418,6 +418,6 @@ http://localhost:5173
 
 ---
 
-**Built for Suzlon Wind Energy CFO AI Assistant** 🌬️💚
+**Built for AIBI Wind Energy CFO AI Assistant** 🌬️💚
 
 *Empowering financial insights through conversational AI*

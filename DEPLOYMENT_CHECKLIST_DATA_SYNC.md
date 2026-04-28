@@ -6,7 +6,7 @@ Use this checklist to deploy and verify the data sync system in your environment
 
 - [ ] **Backup Database**
   ```bash
-  pg_dump suzlon_copilot > backup_$(date +%s).sql
+  pg_dump AIBI_copilot > backup_$(date +%s).sql
   ```
   - Backup location: `_backups/`
   - Date: _______________
@@ -34,7 +34,7 @@ Use this checklist to deploy and verify the data sync system in your environment
 
 - [ ] **Method 1: Automated (Python)**
   ```bash
-  cd Suzlon_Copilot_Main_Brain
+  cd AIBI_Copilot_Main_Brain
   python run_migration.py
   ```
   - Status: _______________
@@ -49,8 +49,8 @@ Use this checklist to deploy and verify the data sync system in your environment
 
 - [ ] **Verify Migration**
   ```bash
-  psql -h localhost -d suzlon_copilot -c "\dt data_sync_state"
-  psql -h localhost -d suzlon_copilot -c "\d csv_documents" | grep is_processed_by_rag
+  psql -h localhost -d AIBI_copilot -c "\dt data_sync_state"
+  psql -h localhost -d AIBI_copilot -c "\d csv_documents" | grep is_processed_by_rag
   ```
   - Tables created: _______________
   - Columns added: _______________
@@ -59,7 +59,7 @@ Use this checklist to deploy and verify the data sync system in your environment
 
 - [ ] **Run Test Suite**
   ```bash
-  cd Suzlon_Copilot_Main_Brain
+  cd AIBI_Copilot_Main_Brain
   python test_data_sync.py
   ```
   - All tests passed: _______________
@@ -68,14 +68,14 @@ Use this checklist to deploy and verify the data sync system in your environment
 - [ ] **Start Services**
   - Terminal 1: Backend
     ```bash
-    cd Suzlon_backend && python main.py
+    cd AIBI_backend && python main.py
     ```
     - Port: _____ (default: 8001)
     - Status: _______________
   
   - Terminal 2: Main Brain
     ```bash
-    cd Suzlon_Copilot_Main_Brain && python main.py
+    cd AIBI_Copilot_Main_Brain && python main.py
     ```
     - Port: _____ (default: 8000)
     - Status: _______________
@@ -130,7 +130,7 @@ Use this checklist to deploy and verify the data sync system in your environment
 
 - [ ] **Test 5: Check Database State**
   ```bash
-  psql -h localhost -d suzlon_copilot -c "
+  psql -h localhost -d AIBI_copilot -c "
     SELECT filename, is_processed_by_rag, rag_processed_at 
     FROM csv_documents 
     ORDER BY created_at DESC LIMIT 1;"
@@ -161,7 +161,7 @@ Use this checklist to deploy and verify the data sync system in your environment
 ## Monitoring Setup
 
 - [ ] **Log Rotation** (if needed)
-  - Log file location: `logs/suzlon-copilot-main-brain.log`
+  - Log file location: `logs/AIBI-copilot-main-brain.log`
   - Size limit: _______________
   - Retention: _______________
 
@@ -173,7 +173,7 @@ Use this checklist to deploy and verify the data sync system in your environment
 
 - [ ] **Set Up Log Monitoring** (optional)
   ```bash
-  tail -f logs/suzlon-copilot-main-brain.log | grep -E "🔄|✅|❌"
+  tail -f logs/AIBI-copilot-main-brain.log | grep -E "🔄|✅|❌"
   ```
   - Logs being generated: _______________
 
@@ -182,13 +182,13 @@ Use this checklist to deploy and verify the data sync system in your environment
 - [ ] **Adjust Sync Interval** (if needed)
   - Current: 300 seconds (5 minutes)
   - Preferred: _____ seconds
-  - File: `Suzlon_Copilot_Main_Brain/services/data_sync_manager.py` (line ~20)
+  - File: `AIBI_Copilot_Main_Brain/services/data_sync_manager.py` (line ~20)
   - Change made: _______________
 
 - [ ] **Adjust Batch Size** (if needed)
   - Current: 50 documents
   - Preferred: _____ documents
-  - File: `Suzlon_Copilot_Main_Brain/services/data_sync_manager.py` (line ~21)
+  - File: `AIBI_Copilot_Main_Brain/services/data_sync_manager.py` (line ~21)
   - Change made: _______________
 
 - [ ] **Restart Service** (after any changes)
@@ -253,7 +253,7 @@ If deployment fails, follow these steps:
 
 2. **Restore Database Backup**
    ```bash
-   psql suzlon_copilot < backup_XXXXXXXXX.sql
+   psql AIBI_copilot < backup_XXXXXXXXX.sql
    ```
 
 3. **Revert Code Changes**
@@ -299,13 +299,13 @@ curl http://localhost:8000/api/v1/admin/sync/pending | jq .
 curl -X POST http://localhost:8000/api/v1/admin/sync/trigger | jq .
 
 # View logs
-tail -f logs/suzlon-copilot-main-brain.log | grep -i sync
+tail -f logs/AIBI-copilot-main-brain.log | grep -i sync
 
 # Check database
-psql -h localhost -d suzlon_copilot -c "SELECT * FROM data_sync_state;"
+psql -h localhost -d AIBI_copilot -c "SELECT * FROM data_sync_state;"
 
 # Count processed docs
-psql -h localhost -d suzlon_copilot -c "
+psql -h localhost -d AIBI_copilot -c "
   SELECT COUNT(CASE WHEN is_processed_by_rag THEN 1 END) FROM csv_documents;"
 ```
 

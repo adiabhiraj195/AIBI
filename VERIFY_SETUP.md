@@ -1,6 +1,6 @@
 # ✅ Setup Verification Checklist
 
-Verify your Suzlon setup is complete and working correctly.
+Verify your AIBI setup is complete and working correctly.
 
 ---
 
@@ -32,15 +32,15 @@ ls -la | grep -E "(docker-compose|Dockerfile|\.env|README|QUICKSTART|ARCHITECTUR
 
 ```bash
 # Check each Dockerfile exists
-test -f Suzlon_Backend/Dockerfile && echo "✅ Suzlon_Backend/Dockerfile" || echo "❌ Missing"
-test -f Suzlon_Copilot_Main_Brain/Dockerfile && echo "✅ Suzlon_Copilot_Main_Brain/Dockerfile" || echo "❌ Missing"
-test -f Suzlon_Copilot_Frontend/Dockerfile && echo "✅ Suzlon_Copilot_Frontend/Dockerfile" || echo "❌ Missing"
+test -f AIBI_Backend/Dockerfile && echo "✅ AIBI_Backend/Dockerfile" || echo "❌ Missing"
+test -f AIBI_Copilot_Main_Brain/Dockerfile && echo "✅ AIBI_Copilot_Main_Brain/Dockerfile" || echo "❌ Missing"
+test -f AIBI_Copilot_Frontend/Dockerfile && echo "✅ AIBI_Copilot_Frontend/Dockerfile" || echo "❌ Missing"
 
 # Check .env.example files
 test -f .env.example && echo "✅ Root .env.example" || echo "❌ Missing"
-test -f Suzlon_Backend/.env.example && echo "✅ Backend A .env.example" || echo "❌ Missing"
-test -f Suzlon_Copilot_Main_Brain/.env.example && echo "✅ Backend B .env.example" || echo "❌ Missing"
-test -f Suzlon_Copilot_Frontend/.env.example && echo "✅ Frontend .env.example" || echo "❌ Missing"
+test -f AIBI_Backend/.env.example && echo "✅ Backend A .env.example" || echo "❌ Missing"
+test -f AIBI_Copilot_Main_Brain/.env.example && echo "✅ Backend B .env.example" || echo "❌ Missing"
+test -f AIBI_Copilot_Frontend/.env.example && echo "✅ Frontend .env.example" || echo "❌ Missing"
 ```
 
 ---
@@ -59,7 +59,7 @@ grep -q "LLM_API_KEY" .env && echo "✅ LLM_API_KEY set" || echo "❌ LLM_API_KE
 grep -q "GROQ_API_KEY" .env && echo "✅ GROQ_API_KEY set" || echo "❌ GROQ_API_KEY missing"
 
 # Check they're not still example values
-if ! grep "DB_PASSWORD=suzlon_password_change_me" .env > /dev/null; then
+if ! grep "DB_PASSWORD=AIBI_password_change_me" .env > /dev/null; then
     echo "✅ DB_PASSWORD customized"
 else
     echo "⚠️  DB_PASSWORD still has example value"
@@ -93,15 +93,15 @@ docker compose config --services
 ```bash
 # Verify each service directory has requirements
 echo "Checking backend dependencies..."
-test -f Suzlon_Backend/requirements.txt && echo "✅ Backend A requirements.txt" || echo "❌ Missing"
-test -f Suzlon_Copilot_Main_Brain/requirements.txt && echo "✅ Backend B requirements.txt" || echo "❌ Missing"
-test -f Suzlon_Copilot_Frontend/package.json && echo "✅ Frontend package.json" || echo "❌ Missing"
+test -f AIBI_Backend/requirements.txt && echo "✅ Backend A requirements.txt" || echo "❌ Missing"
+test -f AIBI_Copilot_Main_Brain/requirements.txt && echo "✅ Backend B requirements.txt" || echo "❌ Missing"
+test -f AIBI_Copilot_Frontend/package.json && echo "✅ Frontend package.json" || echo "❌ Missing"
 
 # Check Vite config for frontend
-test -f Suzlon_Copilot_Frontend/vite.config.ts && echo "✅ Frontend vite.config.ts" || echo "❌ Missing"
+test -f AIBI_Copilot_Frontend/vite.config.ts && echo "✅ Frontend vite.config.ts" || echo "❌ Missing"
 
 # Check for database schema
-test -f Suzlon_Backend/database_schema.sql && echo "✅ Database schema file" || echo "❌ Missing"
+test -f AIBI_Backend/database_schema.sql && echo "✅ Database schema file" || echo "❌ Missing"
 ```
 
 ---
@@ -114,7 +114,7 @@ echo "Building Docker images (this may take 5-10 minutes)..."
 docker compose build 2>&1 | tee build.log
 
 # Check build success
-if docker images | grep -E "(suzlon|postgres|redis)" > /dev/null; then
+if docker images | grep -E "(AIBI|postgres|redis)" > /dev/null; then
     echo "✅ Docker images built successfully"
 else
     echo "❌ Image build may have failed - check build.log"
@@ -152,14 +152,14 @@ docker compose ps --format "table {{.Names}}\t{{.Status}}"
 ```bash
 # Test database connection
 echo "Testing database connection..."
-docker compose exec database pg_isready -U suzlon_user -d Suzlon_Backend && echo "✅ Database is ready" || echo "❌ Database connection failed"
+docker compose exec database pg_isready -U AIBI_user -d AIBI_Backend && echo "✅ Database is ready" || echo "❌ Database connection failed"
 
 # Verify database name
-docker compose exec database psql -U suzlon_user -l | grep Suzlon_Backend && echo "✅ Database 'Suzlon_Backend' exists" || echo "❌ Database not found"
+docker compose exec database psql -U AIBI_user -l | grep AIBI_Backend && echo "✅ Database 'AIBI_Backend' exists" || echo "❌ Database not found"
 
 # Check for tables
 echo "Database tables:"
-docker compose exec database psql -U suzlon_user -d Suzlon_Backend -c "\dt" | head -20
+docker compose exec database psql -U AIBI_user -d AIBI_Backend -c "\dt" | head -20
 ```
 
 ---
@@ -214,8 +214,8 @@ docker compose exec backend-brain env | grep DB_
 # Both should show:
 # ✅ DB_HOST=database
 # ✅ DB_PORT=5432
-# ✅ DB_NAME=Suzlon_Backend
-# ✅ DB_USER=suzlon_user
+# ✅ DB_NAME=AIBI_Backend
+# ✅ DB_USER=AIBI_user
 ```
 
 ---
@@ -277,7 +277,7 @@ docker compose logs database | grep -i "error" | head -3
 
 ```bash
 # Overall system health
-echo "=== SUZLON SETUP VERIFICATION SUMMARY ==="
+echo "=== AIBI SETUP VERIFICATION SUMMARY ==="
 echo ""
 
 # Count passed checks
@@ -294,7 +294,7 @@ if docker compose ps | grep -c "(healthy)" > 0; then
 fi
 
 # Database connectivity
-if docker compose exec database pg_isready -U suzlon_user > /dev/null 2>&1; then
+if docker compose exec database pg_isready -U AIBI_user > /dev/null 2>&1; then
     echo "✅ Database connectivity confirmed"
     ((PASSED++))
 fi

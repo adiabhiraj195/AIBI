@@ -96,7 +96,7 @@ async def run_migration():
                 VALUES ($1, 'healthy')
                 ON CONFLICT (service_name) DO NOTHING
                 """,
-                "suzlon-copilot-main-brain"
+                "AIBI-copilot-main-brain"
             )
             logger.info("✅ Sync state initialized")
 
@@ -160,7 +160,7 @@ async def run_migration():
         logger.info("   • sync_history table: For future audit trail")
 
         logger.info("\n🚀 Next Steps:")
-        logger.info("   1. Restart Suzlon_Copilot_Main_Brain service")
+        logger.info("   1. Restart AIBI_Copilot_Main_Brain service")
         logger.info("   2. Monitor sync status via: GET /api/v1/admin/sync/status")
         logger.info("   3. Trigger manual sync via: POST /api/v1/admin/sync/trigger")
 

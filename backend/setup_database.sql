@@ -2,16 +2,16 @@
 -- Execute: psql postgres < setup_database.sql
 
 -- Create user
-CREATE USER suzlon_user WITH PASSWORD 'suzlon_password';
+CREATE USER AIBI_user WITH PASSWORD 'AIBI_password';
 
 -- Create database
-CREATE DATABASE "Suzlon_Backend" OWNER suzlon_user;
+CREATE DATABASE "AIBI_Backend" OWNER AIBI_user;
 
 -- Grant privileges
-GRANT ALL PRIVILEGES ON DATABASE "Suzlon_Backend" TO suzlon_user;
+GRANT ALL PRIVILEGES ON DATABASE "AIBI_Backend" TO AIBI_user;
 
 -- Connect to the new database and grant schema privileges
-\c Suzlon_Backend
-GRANT ALL ON SCHEMA public TO suzlon_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO suzlon_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO suzlon_user;
+\c AIBI_Backend
+GRANT ALL ON SCHEMA public TO AIBI_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO AIBI_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO AIBI_user;

@@ -1,4 +1,4 @@
-# Suzlon System Architecture 🏗️
+# AIBI System Architecture 🏗️
 
 Complete technical architecture for the multi-service setup.
 
@@ -52,7 +52,7 @@ Complete technical architecture for the multi-service setup.
 │              PostgreSQL Database (Shared)                        │
 │                    Port: 5432                                    │
 │                                                                  │
-│ Database: Suzlon_Backend                                         │
+│ Database: AIBI_Backend                                         │
 │                                                                  │
 │ Extensions:                                                      │
 │ • pgvector - For vector embeddings and similarity search        │
@@ -98,7 +98,7 @@ Complete technical architecture for the multi-service setup.
 
 ### Frontend: React + Vite SPA
 
-**Location:** `Suzlon_Copilot_Frontend/`
+**Location:** `AIBI_Copilot_Frontend/`
 
 **Technology Stack:**
 - **Framework:** React 18.3.1
@@ -144,7 +144,7 @@ src/ → Vite → dist/ → Serve
 
 ### Backend A: CSV Upload & Processing API
 
-**Location:** `Suzlon_Backend/`
+**Location:** `AIBI_Backend/`
 
 **Technology Stack:**
 - **Framework:** FastAPI 0.104.1
@@ -179,13 +179,13 @@ DELETE /api/files/{id}            - Delete file
 **Database Connection:**
 ```python
 # Via environment variables
-DATABASE_URL = "postgresql://user:pass@database:5432/Suzlon_Backend"
+DATABASE_URL = "postgresql://user:pass@database:5432/AIBI_Backend"
 
 # Or via components
 db_host = "database" (in Docker)
 db_port = 5432
-db_name = "Suzlon_Backend"
-db_user = "suzlon_user"
+db_name = "AIBI_Backend"
+db_user = "AIBI_user"
 db_password = os.getenv("DB_PASSWORD")
 ```
 
@@ -215,7 +215,7 @@ db_password = os.getenv("DB_PASSWORD")
 
 ### Backend B: Multi-Agent RAG System
 
-**Location:** `Suzlon_Copilot_Main_Brain/`
+**Location:** `AIBI_Copilot_Main_Brain/`
 
 **Technology Stack:**
 - **Framework:** FastAPI 0.104.1
@@ -278,11 +278,11 @@ POST   /api/session               - Create session
 
 **Database Connection:**
 ```python
-# Shared Suzlon_Backend database
+# Shared AIBI_Backend database
 db_host = "database" (in Docker)
 db_port = 5432
-db_name = "Suzlon_Backend"
-db_user = "suzlon_user"
+db_name = "AIBI_Backend"
+db_user = "AIBI_user"
 
 # Connection pool
 min_connections = 2
@@ -380,14 +380,14 @@ Turn 2: User asks "Compare with last year"
 
 ## Networking Architecture
 
-### Docker Network: `suzlon-network`
+### Docker Network: `AIBI-network`
 
 All services on a shared bridge network:
 
 ```
 ┌─────────────────────────────────────────┐
 │        Docker Bridge Network             │
-│         (suzlon-network)                │
+│         (AIBI-network)                │
 │                                         │
 │  ┌──────────────────────────────────┐  │
 │  │ frontend (3000)                  │  │

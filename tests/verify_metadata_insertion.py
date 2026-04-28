@@ -5,7 +5,7 @@ import sys
 import os
 
 # Setup path
-backend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Suzlon_backend'))
+backend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'AIBI_backend'))
 sys.path.insert(0, backend_path)
 
 # Mock dependencies that metadata_service imports

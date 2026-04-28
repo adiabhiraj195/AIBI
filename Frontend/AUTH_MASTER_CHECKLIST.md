@@ -281,7 +281,7 @@ VITE_API_BASE_PATH=/api/v1
 
 #### Backend (.env)
 ```
-DATABASE_URL=postgresql://user:password@localhost/suzlon_db
+DATABASE_URL=postgresql://user:password@localhost/AIBI_db
 JWT_SECRET_KEY=your-super-secret-key-change-in-production
 JWT_ALGORITHM=HS256
 JWT_EXPIRATION_HOURS=24

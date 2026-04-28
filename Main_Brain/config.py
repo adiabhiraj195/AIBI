@@ -17,10 +17,10 @@ class AppSettings(BaseSettings):
     log_level: str = Field(default="INFO", env="LOG_LEVEL")
     log_format: str = Field(default="json", env="LOG_FORMAT")
     
-    # Database settings - shared Suzlon_Backend database
+    # Database settings - shared AIBI_Backend database
     db_host: str = Field(default="database", env="DB_HOST")  # Use 'database' for Docker, localhost for local dev
     db_port: int = Field(default=5432, env="DB_PORT")
-    db_name: str = Field(default="Suzlon_Backend", env="DB_NAME")
+    db_name: str = Field(default="AIBI_Backend", env="DB_NAME")
     db_user: Optional[str] = Field(default=None, env="DB_USER")
     db_password: Optional[str] = Field(default=None, env="DB_PASSWORD")
     db_ssl_mode: str = Field(default="disable", env="DB_SSL_MODE")  # disable in Docker, require in production

@@ -3,7 +3,7 @@
 
 ## Introduction
 
-A multi-agent chatbot copilot system that provides CFO-grade financial insights, dynamic visualizations, and predictive analytics for Suzlon's wind turbine project data. The system leverages RAG (Retrieval Augmented Generation) with existing pgvector embeddings to deliver contextual, conversational responses with memory, automated chart generation, and follow-up question suggestions.
+A multi-agent chatbot copilot system that provides CFO-grade financial insights, dynamic visualizations, and predictive analytics for AIBI's wind turbine project data. The system leverages RAG (Retrieval Augmented Generation) with existing pgvector embeddings to deliver contextual, conversational responses with memory, automated chart generation, and follow-up question suggestions.
 
 **Current Implementation Status**: The core orchestration system is fully implemented with priority-based routing, confidence thresholding, and intelligent clarification requests. The system currently uses NL2SQL Agent, Statistical Query Handler, and RAG Semantic Search as the primary data processing components, with specialized agents (Visualization, Forecasting, Follow-Up) planned for future implementation phases.
 
@@ -32,7 +32,7 @@ A multi-agent chatbot copilot system that provides CFO-grade financial insights,
 2. THE Insights_Agent SHALL provide responses in exactly 4-5 lines with highlighted key financial information
 3. THE RAG_System SHALL retrieve relevant documents from the existing pgvector database with 105,984 records
 4. THE Conversation_Memory SHALL maintain context for at least 10 previous interactions per session
-5. THE System SHALL restrict all responses to internal Suzlon data only without external sources
+5. THE System SHALL restrict all responses to internal AIBI data only without external sources
 6. THE System SHALL stream processing stages via Server-Sent Events to show real-time agent execution
 
 ### Requirement 2

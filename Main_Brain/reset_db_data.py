@@ -38,11 +38,11 @@ async def reset_data():
     3. PRESERVE: users, conversation_history, dashboard_items (unless requested otherwise)
     """
     # Use DB_* variables from .env as seen in config.py
-    user = os.getenv('DB_USER', 'suzlon_user')
-    password = os.getenv('DB_PASSWORD', 'suzlon_password')
+    user = os.getenv('DB_USER', 'AIBI_user')
+    password = os.getenv('DB_PASSWORD', 'AIBI_password')
     host = os.getenv('DB_HOST', 'localhost')
     port = os.getenv('DB_PORT', '5432')
-    dbname = os.getenv('DB_NAME', 'Suzlon_Backend')
+    dbname = os.getenv('DB_NAME', 'AIBI_Backend')
 
     db_url = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
     

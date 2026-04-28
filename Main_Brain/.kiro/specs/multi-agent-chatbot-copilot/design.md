@@ -3,7 +3,7 @@
 
 ## Overview
 
-The Multi-Agent Chatbot Copilot is a sophisticated financial analytics system built on a multi-agent architecture using LangGraph for orchestration. The system processes natural language queries about Suzlon's wind turbine project data, leveraging existing RAG capabilities with pgvector embeddings to provide CFO-grade insights, dynamic visualizations, and predictive analytics.
+The Multi-Agent Chatbot Copilot is a sophisticated financial analytics system built on a multi-agent architecture using LangGraph for orchestration. The system processes natural language queries about AIBI's wind turbine project data, leveraging existing RAG capabilities with pgvector embeddings to provide CFO-grade insights, dynamic visualizations, and predictive analytics.
 
 The architecture follows a hub-and-spoke pattern with an Orchestrator Agent that routes queries to existing specialized handlers: NL2SQL Agent, Statistical Query Handler, and RAG Semantic Search. The system uses a priority-based routing approach with confidence thresholding to ensure high-quality responses.
 

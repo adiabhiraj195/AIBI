@@ -1,6 +1,6 @@
 # Multi-Agent Chatbot Copilot
 
-An enterprise-grade multi-agent RAG system that delivers **100% accurate business intelligence** for Suzlon's wind turbine project data. Features hybrid query processing with statistical analysis, NL2SQL generation, and semantic search capabilities.
+An enterprise-grade multi-agent RAG system that delivers **100% accurate business intelligence** for AIBI's wind turbine project data. Features hybrid query processing with statistical analysis, NL2SQL generation, and semantic search capabilities.
 
 ## 🎯 **System Overview**
 

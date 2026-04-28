@@ -60,7 +60,7 @@ OPTION 1: Automated Setup (5 minutes)
   $ bash QUICK_START_DATA_SYNC.sh
 
 OPTION 2: Manual Setup (10 minutes)
-  $ cd Suzlon_Copilot_Main_Brain
+  $ cd AIBI_Copilot_Main_Brain
   $ python run_migration.py
   $ python main.py
 
@@ -86,7 +86,7 @@ List Pending:
 📂 WHERE EVERYTHING IS
 ───────────────────────────────────────────────────────────────────
 
-Suzlon_Copilot_Main_Brain/
+AIBI_Copilot_Main_Brain/
   ├─ services/data_sync_manager.py        ← Core service
   ├─ services/__init__.py
   ├─ run_migration.py                     ← Setup database
@@ -175,7 +175,7 @@ Handles:
 🔧 CONFIGURATION (OPTIONAL)
 ───────────────────────────────────────────────────────────────────
 
-File: Suzlon_Copilot_Main_Brain/services/data_sync_manager.py
+File: AIBI_Copilot_Main_Brain/services/data_sync_manager.py
 
 Default: Sync every 5 minutes, 50 documents per batch
 

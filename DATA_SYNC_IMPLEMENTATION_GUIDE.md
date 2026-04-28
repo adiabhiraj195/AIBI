@@ -2,13 +2,13 @@
 
 ## Overview
 
-This implementation enables automatic synchronization of CSV files uploaded to the Suzlon Backend with the RAG system in Suzlon_Copilot_Main_Brain. Your ML models are now **always aware of new data** uploaded into the shared database.
+This implementation enables automatic synchronization of CSV files uploaded to the AIBI Backend with the RAG system in AIBI_Copilot_Main_Brain. Your ML models are now **always aware of new data** uploaded into the shared database.
 
 ## How It Works
 
 ```
 ┌─────────────────────────────┐
-│   Suzlon_backend            │
+│   AIBI_backend            │
 │  (CSV File Upload)          │
 └──────────────┬──────────────┘
                │
@@ -37,7 +37,7 @@ This implementation enables automatic synchronization of CSV files uploaded to t
 ### Option A: Using Python Script (Recommended)
 
 ```bash
-cd /Users/abhi/Documents/Nspark/Suzlon_Copilot_Main_Brain
+cd /Users/abhi/Documents/Nspark/AIBI_Copilot_Main_Brain
 
 # Run migration
 python run_migration.py
@@ -51,7 +51,7 @@ chmod +x migration_data_sync.sh
 # Set environment variables (if needed)
 export DB_HOST=localhost
 export DB_PORT=5432
-export DB_NAME=suzlon_copilot
+export DB_NAME=AIBI_copilot
 export DB_USER=postgres
 
 # Run migration
@@ -61,7 +61,7 @@ export DB_USER=postgres
 ### Option C: Manual SQL
 
 ```bash
-psql -h localhost -p 5432 -U postgres -d suzlon_copilot << 'EOF'
+psql -h localhost -p 5432 -U postgres -d AIBI_copilot << 'EOF'
 
 -- 1. Create data_sync_state table
 CREATE TABLE IF NOT EXISTS data_sync_state (
@@ -94,7 +94,7 @@ ON csv_documents(data_hash);
 
 -- 5. Initialize sync state
 INSERT INTO data_sync_state (service_name, status) 
-VALUES ('suzlon-copilot-main-brain', 'healthy')
+VALUES ('AIBI-copilot-main-brain', 'healthy')
 ON CONFLICT (service_name) DO NOTHING;
 
 EOF
@@ -149,7 +149,7 @@ Response:
 ```json
 {
   "sync_state": {
-    "service_name": "suzlon-copilot-main-brain",
+    "service_name": "AIBI-copilot-main-brain",
     "status": "healthy",
     "last_sync_timestamp": "2024-01-10T10:30:45.123456",
     "error_message": null,
@@ -195,7 +195,7 @@ Tracks synchronization status between backend and main brain:
 | Column | Type | Purpose |
 |--------|------|---------|
 | `id` | SERIAL | Primary key |
-| `service_name` | VARCHAR(50) | Service identifier (e.g., "suzlon-copilot-main-brain") |
+| `service_name` | VARCHAR(50) | Service identifier (e.g., "AIBI-copilot-main-brain") |
 | `last_sync_timestamp` | TIMESTAMP | When the last sync occurred |
 | `last_synced_document_id` | BIGINT | Last document ID processed |
 | `total_documents_synced` | BIGINT | Cumulative documents processed |
@@ -239,14 +239,14 @@ cd /Users/abhi/Documents/Nspark
 docker-compose up
 
 # Or start manually
-cd Suzlon_backend && python main.py &
-cd ../Suzlon_Copilot_Main_Brain && python main.py &
+cd AIBI_backend && python main.py &
+cd ../AIBI_Copilot_Main_Brain && python main.py &
 ```
 
 ### Verify Sync Manager is Running
 ```bash
 # Check logs for sync initialization
-tail -f logs/suzlon-copilot-main-brain.log | grep -i "sync\|data"
+tail -f logs/AIBI-copilot-main-brain.log | grep -i "sync\|data"
 
 # Check sync status
 curl http://localhost:8000/api/v1/admin/sync/status | jq .
@@ -257,7 +257,7 @@ curl http://localhost:8000/api/v1/admin/sync/status | jq .
 ### Test 1: Upload a CSV and Verify Automatic Sync
 
 ```bash
-# 1. Upload a CSV file via Suzlon_backend
+# 1. Upload a CSV file via AIBI_backend
 curl -X POST http://localhost:8001/api/v1/csv/upload \
   -F "file=@test_data.csv" \
   -F "filename=test_data.csv"
@@ -343,25 +343,25 @@ def __init__(self):
 ### Check Sync Logs
 ```bash
 # View recent sync activity
-tail -100 logs/suzlon-copilot-main-brain.log | grep -i "sync\|processing"
+tail -100 logs/AIBI-copilot-main-brain.log | grep -i "sync\|processing"
 
 # Watch real-time sync
-tail -f logs/suzlon-copilot-main-brain.log | grep -E "🔄|✅|❌"
+tail -f logs/AIBI-copilot-main-brain.log | grep -E "🔄|✅|❌"
 ```
 
 ### Database Monitoring
 ```bash
 # Check sync state in database
-psql -h localhost -d suzlon_copilot -c "SELECT * FROM data_sync_state;"
+psql -h localhost -d AIBI_copilot -c "SELECT * FROM data_sync_state;"
 
 # Check processed documents
-psql -h localhost -d suzlon_copilot -c "
+psql -h localhost -d AIBI_copilot -c "
   SELECT filename, is_processed_by_rag, created_at, rag_processed_at 
   FROM csv_documents 
   ORDER BY created_at DESC LIMIT 5;"
 
 # Check pending documents count
-psql -h localhost -d suzlon_copilot -c "
+psql -h localhost -d AIBI_copilot -c "
   SELECT COUNT(*) as pending 
   FROM csv_documents 
   WHERE is_processed_by_rag = FALSE;"
@@ -381,19 +381,19 @@ curl http://localhost:8000/api/v1/admin/sync/status | jq '.sync_state.error_mess
 curl -X POST http://localhost:8000/api/v1/admin/sync/trigger
 
 # 4. Check logs
-tail -50 logs/suzlon-copilot-main-brain.log
+tail -50 logs/AIBI-copilot-main-brain.log
 ```
 
 ### Issue: Sync Manager not starting
 ```bash
 # Check if service initialized properly
-grep "Data Sync Manager" logs/suzlon-copilot-main-brain.log
+grep "Data Sync Manager" logs/AIBI-copilot-main-brain.log
 
 # Verify database connection
 python -c "from database.connection import db_manager; print('DB OK')"
 
 # Check if sync table exists
-psql -h localhost -d suzlon_copilot -c "\dt data_sync_state"
+psql -h localhost -d AIBI_copilot -c "\dt data_sync_state"
 ```
 
 ### Issue: High database load

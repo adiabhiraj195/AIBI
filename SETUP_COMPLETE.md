@@ -12,7 +12,7 @@ Complete record of all modifications to implement multi-service Docker architect
 - Ports: 3000 (Frontend), 8001 (CSV API), 8000 (Main Brain), 5432 (DB), 6379 (Redis)
 
 ✅ **2. Unified Database Configuration**
-- Updated both backends to use `Suzlon_Backend` database
+- Updated both backends to use `AIBI_Backend` database
 - Replaced hardcoded hostnames with Docker service names
 - Made all DB credentials configurable via environment variables
 
@@ -23,7 +23,7 @@ Complete record of all modifications to implement multi-service Docker architect
 
 ✅ **4. Orchestrated Services with Docker Compose**
 - Single `docker-compose.yml` at root level
-- Shared `suzlon-network` for service communication
+- Shared `AIBI-network` for service communication
 - Automatic wait-for-dependencies
 - Volume management for persistence
 
@@ -50,18 +50,18 @@ Complete record of all modifications to implement multi-service Docker architect
 
 ### Docker Configuration
 ```
-/Suzlon_Backend/Dockerfile                           → FastAPI CSV API image
-/Suzlon_Copilot_Main_Brain/Dockerfile                → FastAPI RAG system image
-/Suzlon_Copilot_Frontend/Dockerfile                  → React/Vite SPA image
+/AIBI_Backend/Dockerfile                           → FastAPI CSV API image
+/AIBI_Copilot_Main_Brain/Dockerfile                → FastAPI RAG system image
+/AIBI_Copilot_Frontend/Dockerfile                  → React/Vite SPA image
 /docker-compose.yml                                  → Full orchestration
 ```
 
 ### Environment Configuration
 ```
 /.env.example                                        → Root-level env template
-/Suzlon_Backend/.env.example                         → Backend A env template
-/Suzlon_Copilot_Main_Brain/.env.example              → Backend B env template
-/Suzlon_Copilot_Frontend/.env.example                → Frontend env template
+/AIBI_Backend/.env.example                         → Backend A env template
+/AIBI_Copilot_Main_Brain/.env.example              → Backend B env template
+/AIBI_Copilot_Frontend/.env.example                → Frontend env template
 ```
 
 ### Documentation
@@ -86,26 +86,26 @@ Complete record of all modifications to implement multi-service Docker architect
 
 ### Backend Configuration Updates
 
-**File: `/Suzlon_Copilot_Main_Brain/config.py`**
+**File: `/AIBI_Copilot_Main_Brain/config.py`**
 - ✅ Changed `DB_HOST` default from `23.22.202.15` → `database`
-- ✅ Changed `DB_NAME` from `postgres` → `Suzlon_Backend`
+- ✅ Changed `DB_NAME` from `postgres` → `AIBI_Backend`
 - ✅ Changed `DB_SSL_MODE` from `prefer` → `disable` (for Docker)
 - ✅ Changed `REDIS_HOST` from `localhost` → `redis`
 - ✅ Added comments explaining Docker vs. local development
 
-**File: `/Suzlon_Backend/app/config.py`**
+**File: `/AIBI_Backend/app/config.py`**
 - ✅ Added `db_host`, `db_port`, `db_name`, `db_user`, `db_password` fields
 - ✅ Created `get_database_url()` method for flexible connection string building
 - ✅ Added comprehensive docstrings for database configuration
 - ✅ Maintained backward compatibility with existing code
 
-**File: `/Suzlon_Copilot_Main_Brain/.env.example`**
+**File: `/AIBI_Copilot_Main_Brain/.env.example`**
 - ✅ Completely rewritten with current database configuration
 - ✅ Added comments explaining Docker vs. local setup
-- ✅ Changed `DB_NAME` to `Suzlon_Backend`
+- ✅ Changed `DB_NAME` to `AIBI_Backend`
 - ✅ Updated all 41 lines with proper defaults and descriptions
 
-**File: `/Suzlon_Copilot_Frontend/.env.example`**
+**File: `/AIBI_Copilot_Frontend/.env.example`**
 - ✅ Restructured with clear sections
 - ✅ Added `VITE_CSV_API_URL` for CSV backend endpoint
 - ✅ Improved documentation
@@ -120,8 +120,8 @@ Both backends connect to:
 ```
 Host: database (Docker) or localhost (local)
 Port: 5432
-Database: Suzlon_Backend
-User: suzlon_user (configurable)
+Database: AIBI_Backend
+User: AIBI_user (configurable)
 Password: (from environment variable)
 ```
 
@@ -209,7 +209,7 @@ redis_data/       → Redis snapshots/AOF
 
 1. **Configuration:**
    - Both have `DB_HOST=database`
-   - Both have `DB_NAME=Suzlon_Backend`
+   - Both have `DB_NAME=AIBI_Backend`
    - Both use same credentials from `.env`
 
 2. **Connection Pooling:**
@@ -224,7 +224,7 @@ redis_data/       → Redis snapshots/AOF
 4. **Data Flow:**
    ```
    Backend A ──┐
-              ├─→ PostgreSQL (Suzlon_Backend)
+              ├─→ PostgreSQL (AIBI_Backend)
    Backend B ──┘
    ```
 
@@ -239,7 +239,7 @@ docker compose up --build
 
 ### Sequence:
 1. Build all images (parallel)
-2. Create `suzlon-network`
+2. Create `AIBI-network`
 3. Start `database` (PostgreSQL)
 4. Start `redis`
 5. Wait for database health check
@@ -381,7 +381,7 @@ To extend this setup:
 ## 📞 Support Resources
 
 ### For Each Service:
-- Suzlon_Backend: `README.md`, `POSTMAN_TESTING_GUIDE.md`, API docs at `/docs`
+- AIBI_Backend: `README.md`, `POSTMAN_TESTING_GUIDE.md`, API docs at `/docs`
 - Main Brain: `README.md`, `START_HERE.md`, API docs at `/docs`
 - Frontend: `README.md`, `QUICK_START.md`
 
@@ -398,7 +398,7 @@ To extend this setup:
 **What You Have Now:**
 
 ✅ Production-ready multi-service architecture
-✅ Shared database configuration (both backends → Suzlon_Backend)
+✅ Shared database configuration (both backends → AIBI_Backend)
 ✅ Docker containerization for all services
 ✅ One-command startup: `docker compose up --build`
 ✅ Complete documentation (2000+ lines)
@@ -420,4 +420,4 @@ To extend this setup:
 
 **Setup Completed:** January 9, 2026
 
-**All requirements satisfied! Your Suzlon system is ready to deploy.** 🚀
+**All requirements satisfied! Your AIBI system is ready to deploy.** 🚀

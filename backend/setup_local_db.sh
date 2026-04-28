@@ -3,12 +3,12 @@
 # Setup script for local PostgreSQL database
 # This creates the database user, database, and schema
 
-echo "Setting up local PostgreSQL database for Suzlon Backend..."
+echo "Setting up local PostgreSQL database for AIBI Backend..."
 
 # Database configuration
-DB_NAME="Suzlon_Backend"
-DB_USER="suzlon_user"
-DB_PASSWORD="suzlon_password"
+DB_NAME="AIBI_Backend"
+DB_USER="AIBI_user"
+DB_PASSWORD="AIBI_password"
 
 # Create the database user if it doesn't exist
 echo "Creating database user..."

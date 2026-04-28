@@ -2,7 +2,7 @@
 
 ## What You're Getting
 
-A **complete, production-ready database-based authentication system** for user login and signup has been successfully implemented in your Suzlon backend application.
+A **complete, production-ready database-based authentication system** for user login and signup has been successfully implemented in your AIBI backend application.
 
 ---
 

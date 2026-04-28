@@ -93,7 +93,7 @@ async def lifespan(app: FastAPI):
 # Create FastAPI application
 app = FastAPI(
     title="Multi-Agent Chatbot Copilot",
-    description="CFO-grade financial insights with multi-agent orchestration for Suzlon wind turbine data",
+    description="CFO-grade financial insights with multi-agent orchestration for AIBI wind turbine data",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -534,7 +534,7 @@ async def get_sync_status():
             sync_state = await conn.fetchrow(
                 """
                 SELECT * FROM data_sync_state
-                WHERE service_name = 'suzlon-copilot-main-brain'
+                WHERE service_name = 'AIBI-copilot-main-brain'
                 """
             )
 

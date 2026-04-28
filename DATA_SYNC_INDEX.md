@@ -23,7 +23,7 @@ You now have a **complete, production-ready data synchronization system** that k
 ├── 🚀 AUTOMATION SCRIPTS (Executable)
 │   └─ 🔧 QUICK_START_DATA_SYNC.sh             ← Auto Setup (5 min)
 │
-└── Suzlon_Copilot_Main_Brain/
+└── AIBI_Copilot_Main_Brain/
     │
     ├── 💾 CORE IMPLEMENTATION
     │   └─ services/
@@ -55,7 +55,7 @@ bash /Users/abhi/Documents/Nspark/QUICK_START_DATA_SYNC.sh
 ### Path 2: Manual Setup (10-15 minutes)
 ```bash
 # Step by step
-cd /Users/abhi/Documents/Nspark/Suzlon_Copilot_Main_Brain
+cd /Users/abhi/Documents/Nspark/AIBI_Copilot_Main_Brain
 python run_migration.py              # Run migration
 python test_data_sync.py             # Verify setup
 python main.py                       # Start service
@@ -162,7 +162,7 @@ bash DEPLOYMENT_CHECKLIST_DATA_SYNC.md
 
 **Step 1: Run Migration**
 ```bash
-cd Suzlon_Copilot_Main_Brain
+cd AIBI_Copilot_Main_Brain
 python run_migration.py
 ```
 
@@ -357,7 +357,7 @@ After implementation, verify:
 ### If You Get Stuck
 1. Check: `DATA_SYNC_QUICK_REFERENCE.md` → Troubleshooting section
 2. Search: `DATA_SYNC_IMPLEMENTATION_GUIDE.md` → Find your scenario
-3. Review: Logs via `tail -f logs/suzlon-copilot-main-brain.log`
+3. Review: Logs via `tail -f logs/AIBI-copilot-main-brain.log`
 4. Test: `python test_data_sync.py` → Run verification
 
 ### Common Questions

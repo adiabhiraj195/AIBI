@@ -1,7 +1,7 @@
 # ✅ Data Sync Implementation Summary
 
 ## Overview
-A complete, sustainable data synchronization system has been implemented that keeps your ML models in Suzlon_Copilot_Main_Brain automatically aware of new CSV files uploaded to Suzlon_backend.
+A complete, sustainable data synchronization system has been implemented that keeps your ML models in AIBI_Copilot_Main_Brain automatically aware of new CSV files uploaded to AIBI_backend.
 
 ## What Was Implemented
 
@@ -91,7 +91,7 @@ python run_migration.py
 ├── DATA_SYNC_IMPLEMENTATION_GUIDE.md    ← Complete guide
 ├── QUICK_START_DATA_SYNC.sh             ← Auto setup (executable)
 │
-└── Suzlon_Copilot_Main_Brain/
+└── AIBI_Copilot_Main_Brain/
     ├── services/
     │   ├── __init__.py                  ← New package
     │   └── data_sync_manager.py         ← Sync service
@@ -102,7 +102,7 @@ python run_migration.py
 
 ### Modified Files
 ```
-Suzlon_Copilot_Main_Brain/
+AIBI_Copilot_Main_Brain/
 └── main.py
     ├── Added: import data_sync_manager
     ├── Updated: lifespan() to initialize/cleanup sync manager
@@ -117,7 +117,7 @@ Suzlon_Copilot_Main_Brain/
 Timeline: File Upload to RAG Ready
 ==================================
 
-T=0s:    CSV uploaded to Suzlon_backend
+T=0s:    CSV uploaded to AIBI_backend
          └─→ Stored in shared postgresql.csv_documents table
              └─→ is_processed_by_rag = FALSE
 
@@ -171,7 +171,7 @@ This script will:
 ### Option 2: Manual Setup
 ```bash
 # 1. Navigate to Main Brain directory
-cd /Users/abhi/Documents/Nspark/Suzlon_Copilot_Main_Brain
+cd /Users/abhi/Documents/Nspark/AIBI_Copilot_Main_Brain
 
 # 2. Run database migration
 python run_migration.py
@@ -187,7 +187,7 @@ python main.py
 
 ### Test 1: Verify Database Setup
 ```bash
-cd Suzlon_Copilot_Main_Brain
+cd AIBI_Copilot_Main_Brain
 python test_data_sync.py
 ```
 This runs 5 automated tests:
@@ -236,19 +236,19 @@ curl http://localhost:8000/api/v1/admin/sync/status | jq '.statistics.pending_do
 ### Check Logs
 ```bash
 # View recent sync activity
-tail -50 logs/suzlon-copilot-main-brain.log | grep -i "sync\|processing"
+tail -50 logs/AIBI-copilot-main-brain.log | grep -i "sync\|processing"
 
 # Watch real-time
-tail -f logs/suzlon-copilot-main-brain.log | grep -E "🔄|✅|❌"
+tail -f logs/AIBI-copilot-main-brain.log | grep -E "🔄|✅|❌"
 ```
 
 ### Database Queries
 ```bash
 # Check sync state
-psql -h localhost -d suzlon_copilot -c "SELECT * FROM data_sync_state;"
+psql -h localhost -d AIBI_copilot -c "SELECT * FROM data_sync_state;"
 
 # View processed vs pending documents
-psql -h localhost -d suzlon_copilot -c "
+psql -h localhost -d AIBI_copilot -c "
   SELECT 
     COUNT(*) as total,
     COUNT(CASE WHEN is_processed_by_rag THEN 1 END) as processed,
@@ -256,7 +256,7 @@ psql -h localhost -d suzlon_copilot -c "
   FROM csv_documents;"
 
 # See recent uploads and their sync status
-psql -h localhost -d suzlon_copilot -c "
+psql -h localhost -d AIBI_copilot -c "
   SELECT filename, is_processed_by_rag, created_at, rag_processed_at
   FROM csv_documents
   ORDER BY created_at DESC LIMIT 10;"
@@ -295,7 +295,7 @@ async def trigger_sync(request: Request):
 ### Issue: DataSyncManager not initializing
 **Check logs**: 
 ```bash
-grep "Data Sync Manager" logs/suzlon-copilot-main-brain.log
+grep "Data Sync Manager" logs/AIBI-copilot-main-brain.log
 ```
 **Solution**: Run migration if not done:
 ```bash
@@ -329,7 +329,7 @@ curl -X POST http://localhost:8000/api/v1/admin/sync/trigger
 cat .env | grep -i database
 
 # Test connection
-psql -h localhost -U postgres -d suzlon_copilot
+psql -h localhost -U postgres -d AIBI_copilot
 ```
 
 ## Next Steps & Enhancements
@@ -364,8 +364,8 @@ psql -h localhost -U postgres -d suzlon_copilot
 📖 **Full Guide**: `DATA_SYNC_IMPLEMENTATION_GUIDE.md`
 
 📝 **Key Files**:
-- Sync Service: `Suzlon_Copilot_Main_Brain/services/data_sync_manager.py`
-- API Integration: `Suzlon_Copilot_Main_Brain/main.py`
+- Sync Service: `AIBI_Copilot_Main_Brain/services/data_sync_manager.py`
+- API Integration: `AIBI_Copilot_Main_Brain/main.py`
 - Database Schema: Created via migration scripts
 
 📊 **Monitoring**:
@@ -377,7 +377,7 @@ psql -h localhost -U postgres -d suzlon_copilot
 ## Architecture Diagram
 
 ```
-                    SUZLON_BACKEND
+                    AIBI_BACKEND
                    ┌──────────────┐
                    │  CSV Upload  │
                    │   Service    │
@@ -403,7 +403,7 @@ psql -h localhost -U postgres -d suzlon_copilot
                           │ polls every 5 min  │
                           │                    │
             ┌─────────────────────────────┐   │
-            │ SUZLON_COPILOT_MAIN_BRAIN   │   │
+            │ AIBI_COPILOT_MAIN_BRAIN   │   │
             │                             │   │
             │  DataSyncManager            ├──┘
             │  ├─ background task         │
@@ -437,7 +437,7 @@ psql -h localhost -U postgres -d suzlon_copilot
 ✅ **Transparently** provides monitoring via API  
 ✅ **Flexibly** supports configuration adjustments  
 
-Your ML models will always have access to the latest data from Suzlon_backend! 🚀
+Your ML models will always have access to the latest data from AIBI_backend! 🚀
 
 ---
 

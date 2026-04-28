@@ -7,7 +7,7 @@ set -e
 # Database connection parameters - update these if needed
 DB_HOST="${DB_HOST:-localhost}"
 DB_PORT="${DB_PORT:-5432}"
-DB_NAME="${DB_NAME:-suzlon_copilot}"
+DB_NAME="${DB_NAME:-AIBI_copilot}"
 DB_USER="${DB_USER:-postgres}"
 DB_PASSWORD="${DB_PASSWORD:-}"
 
@@ -61,7 +61,7 @@ ON csv_documents(data_hash);
 
 -- 3. Initialize sync state for Main Brain service
 INSERT INTO data_sync_state (service_name, status) 
-VALUES ('suzlon-copilot-main-brain', 'healthy')
+VALUES ('AIBI-copilot-main-brain', 'healthy')
 ON CONFLICT (service_name) DO NOTHING;
 
 -- 4. Optional: Create a sync history table for auditing (future enhancement)
@@ -107,7 +107,7 @@ if [ $? -eq 0 ]; then
     echo "   • Sync history table: For future audit trail"
     
     echo -e "\n${YELLOW}🚀 Next Steps:${NC}"
-    echo "   1. Restart Suzlon_Copilot_Main_Brain service"
+    echo "   1. Restart AIBI_Copilot_Main_Brain service"
     echo "   2. Monitor sync status via: GET /api/v1/admin/sync/status"
     echo "   3. Trigger manual sync via: POST /api/v1/admin/sync/trigger"
 else

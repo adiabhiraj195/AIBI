@@ -524,4 +524,4 @@ If you encounter issues:
 
 **Happy Testing! 🚀**
 
-Your CFO Multi-Agent Chatbot is now connected and ready to query real financial data from Suzlon's database.
+Your CFO Multi-Agent Chatbot is now connected and ready to query real financial data from AIBI's database.

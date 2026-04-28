@@ -1,5 +1,5 @@
 """
-Services module for Suzlon Copilot Main Brain
+Services module for AIBI Copilot Main Brain
 """
 
 from .data_sync_manager import data_sync_manager

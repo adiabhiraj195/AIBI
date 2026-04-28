@@ -18,9 +18,9 @@ load_dotenv()
 # Database configuration
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = int(os.getenv("DB_PORT", 5432))
-DB_NAME = os.getenv("DB_NAME", "Suzlon_Backend")
-DB_USER = os.getenv("DB_USER", "suzlon_user")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "suzlon_password")
+DB_NAME = os.getenv("DB_NAME", "AIBI_Backend")
+DB_USER = os.getenv("DB_USER", "AIBI_user")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "AIBI_password")
 
 def flush_database():
     """Drop all tables from the database"""

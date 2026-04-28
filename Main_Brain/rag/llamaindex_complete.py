@@ -133,7 +133,7 @@ class WindTurbineQueryEngine(CustomQueryEngine):
     def __init__(self, retriever: LlamaIndexRetriever, llm: OpenRouterLLM):
         # Wind turbine domain-specific prompt
         qa_prompt = PromptTemplate(
-            """You are a specialized AI assistant for Suzlon's wind turbine project data analysis. 
+            """You are a specialized AI assistant for AIBI's wind turbine project data analysis. 
             You have access to comprehensive project data including capacity, customer information, 
             business modules, states, project phases, and financial metrics.
 
@@ -362,7 +362,7 @@ class LlamaIndexCompleteRAG:
         
         Please focus on:
         - Key financial metrics and capacity data with specific numbers
-        - Business impact and implications for Suzlon
+        - Business impact and implications for AIBI
         - Risk factors and capacity deviations with root causes
         - Actionable recommendations for management
         - State and customer distribution insights

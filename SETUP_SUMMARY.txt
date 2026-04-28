@@ -1,5 +1,5 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                   SUZLON MULTI-SERVICE SETUP - COMPLETE ✅                    ║
+║                   AIBI MULTI-SERVICE SETUP - COMPLETE ✅                    ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 📋 WHAT'S BEEN CONFIGURED:
@@ -10,7 +10,7 @@
    • Backend B: Main Brain RAG (FastAPI)        Port: 8000
 
 ✅ SHARED DATABASE
-   • Both backends → PostgreSQL "Suzlon_Backend"
+   • Both backends → PostgreSQL "AIBI_Backend"
    • No data duplication
    • Connection pooling configured
 
@@ -58,15 +58,15 @@
 
    Docker:
    • docker-compose.yml (complete orchestration)
-   • Suzlon_Backend/Dockerfile
-   • Suzlon_Copilot_Main_Brain/Dockerfile
-   • Suzlon_Copilot_Frontend/Dockerfile
+   • AIBI_Backend/Dockerfile
+   • AIBI_Copilot_Main_Brain/Dockerfile
+   • AIBI_Copilot_Frontend/Dockerfile
 
    Configuration:
    • .env.example (root-level shared config)
-   • Suzlon_Backend/.env.example
-   • Suzlon_Copilot_Main_Brain/.env.example
-   • Suzlon_Copilot_Frontend/.env.example
+   • AIBI_Backend/.env.example
+   • AIBI_Copilot_Main_Brain/.env.example
+   • AIBI_Copilot_Frontend/.env.example
 
    Documentation:
    • 00_START_HERE.md (you are here!)
@@ -117,7 +117,7 @@
 🎯 WHAT YOU GET:
 
    ✅ Production-ready multi-service architecture
-   ✅ Shared database configuration (both backends → Suzlon_Backend)
+   ✅ Shared database configuration (both backends → AIBI_Backend)
    ✅ Docker containerization for all services
    ✅ One-command startup: docker compose up --build
    ✅ Complete documentation (2000+ lines)
@@ -132,7 +132,7 @@
 🎓 REQUIREMENTS MET:
 
    ✅ 1️⃣ Understood repo structure
-   ✅ 2️⃣ Both backends use SAME database (Suzlon_Backend)
+   ✅ 2️⃣ Both backends use SAME database (AIBI_Backend)
    ✅ 3️⃣ Updated backend code for configurable DB connection
    ✅ 4️⃣ Dockerized all services with multi-stage builds
    ✅ 5️⃣ Docker Compose with shared network and orchestration

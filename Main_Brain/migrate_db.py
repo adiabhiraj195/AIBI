@@ -14,9 +14,9 @@ async def migrate_db():
         # otherwise defaults are here but they should match your production env
         host = os.getenv("DB_HOST", "localhost")
         port = os.getenv("DB_PORT", "5432")
-        database = os.getenv("DB_NAME", "Suzlon_Backend")
-        user = os.getenv("DB_USER", "suzlon_user")
-        password = os.getenv("DB_PASSWORD", "suzlon_password")
+        database = os.getenv("DB_NAME", "AIBI_Backend")
+        user = os.getenv("DB_USER", "AIBI_user")
+        password = os.getenv("DB_PASSWORD", "AIBI_password")
         ssl_mode = os.getenv("DB_SSL_MODE", "disable")
 
         print(f"Connecting to Postgres at {host}:{port} / DB: {database} / User: {user}")

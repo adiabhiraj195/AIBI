@@ -22,7 +22,7 @@ class DataSyncManager:
         self.sync_interval = 300  # Check every 5 minutes
         self.batch_size = 50  # Process 50 documents at a time
         self._sync_task: Optional[asyncio.Task] = None
-        self.service_name = "suzlon-copilot-main-brain"
+        self.service_name = "AIBI-copilot-main-brain"
         self._is_syncing = False
 
     async def initialize(self) -> None:

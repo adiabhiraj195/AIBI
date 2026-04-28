@@ -5,7 +5,7 @@
 
 ## Migration Overview
 
-The entire Suzlon CSV Backend application has been successfully migrated from hardcoded PostgreSQL queries using `psycopg2` to a modern **SQLAlchemy 2.0 ORM** implementation. This migration improves code maintainability, type safety, and provides protection against SQL injection attacks.
+The entire AIBI CSV Backend application has been successfully migrated from hardcoded PostgreSQL queries using `psycopg2` to a modern **SQLAlchemy 2.0 ORM** implementation. This migration improves code maintainability, type safety, and provides protection against SQL injection attacks.
 
 ## What Changed
 

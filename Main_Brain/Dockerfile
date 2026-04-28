@@ -1,4 +1,4 @@
-# Multi-stage build for Suzlon_Copilot_Main_Brain (Multi-Agent RAG System)
+# Multi-stage build for AIBI_Copilot_Main_Brain (Multi-Agent RAG System)
 # Optimized FastAPI service for AI-powered CFO chatbot with RAG and embeddings
 
 # Stage 1: Builder

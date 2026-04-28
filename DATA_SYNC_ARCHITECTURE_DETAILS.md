@@ -5,7 +5,7 @@
 ### Before Implementation
 ```
 ┌──────────────────────┐
-│  Suzlon_backend      │
+│  AIBI_backend      │
 │  - CSV Upload API    │
 │  - File Storage      │
 └──────────┬───────────┘
@@ -17,7 +17,7 @@
                (new data, but models don't know)
 
 ┌──────────────────────────┐
-│ Suzlon_Copilot_Main_Brain│
+│ AIBI_Copilot_Main_Brain│
 │  - RAG System            │
 │  - ML Models             │
 │  - Chat Endpoints        │
@@ -31,7 +31,7 @@
 ### After Implementation
 ```
 ┌──────────────────────┐
-│  Suzlon_backend      │
+│  AIBI_backend      │
 │  - CSV Upload API    │
 │  - File Storage      │
 └──────────┬───────────┘
@@ -59,7 +59,7 @@
                    │ Polls every 5 minutes
                    │
 ┌──────────────────────────────────┐
-│ Suzlon_Copilot_Main_Brain        │
+│ AIBI_Copilot_Main_Brain        │
 │  ┌───────────────────────────┐   │
 │  │ DataSyncManager Service   │   │
 │  │ ├─ Background async task  │   │  ◄── NEW SERVICE
@@ -161,7 +161,7 @@ Admin/Monitoring
 
 ### DataSyncManager Service
 
-**Location**: `Suzlon_Copilot_Main_Brain/services/data_sync_manager.py`
+**Location**: `AIBI_Copilot_Main_Brain/services/data_sync_manager.py`
 
 **Key Methods**:
 ```
@@ -202,7 +202,7 @@ DataSyncManager
 self.sync_interval = 300      # Check every 5 minutes (adjustable)
 self.batch_size = 50          # Process 50 documents per sync (adjustable)
 self._is_syncing = False      # Prevent concurrent syncs
-self.service_name = "suzlon-copilot-main-brain"  # Service identifier
+self.service_name = "AIBI-copilot-main-brain"  # Service identifier
 ```
 
 ### Database Schema
@@ -272,7 +272,7 @@ GET /api/v1/admin/sync/status
 Response 200:
 {
   "sync_state": {
-    "service_name": "suzlon-copilot-main-brain",
+    "service_name": "AIBI-copilot-main-brain",
     "status": "healthy",
     "last_sync_timestamp": "2024-01-10T10:30:45",
     "error_message": null,

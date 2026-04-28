@@ -4,7 +4,7 @@
 
 ### Step 1: Run Migration
 ```bash
-cd /Users/abhi/Documents/Nspark/Suzlon_Copilot_Main_Brain
+cd /Users/abhi/Documents/Nspark/AIBI_Copilot_Main_Brain
 python run_migration.py
 ```
 
@@ -71,7 +71,7 @@ curl http://localhost:8000/api/v1/admin/sync/status | jq '.sync_state.error_mess
 curl -X POST http://localhost:8000/api/v1/admin/sync/trigger
 
 # 4. View logs
-tail -50 logs/suzlon-copilot-main-brain.log | grep -i sync
+tail -50 logs/AIBI-copilot-main-brain.log | grep -i sync
 ```
 
 ### Q: Service not starting?
@@ -80,7 +80,7 @@ tail -50 logs/suzlon-copilot-main-brain.log | grep -i sync
 python -c "from database.connection import db_manager; print('OK')"
 
 # Check if migration was run
-psql -h localhost -d suzlon_copilot -c "\dt data_sync_state"
+psql -h localhost -d AIBI_copilot -c "\dt data_sync_state"
 
 # If missing, run migration again
 python run_migration.py
@@ -118,9 +118,9 @@ self.batch_size = 100  # 50 → 100
 ## 📁 File Locations
 
 ### Core Implementation Files
-- **Service**: `Suzlon_Copilot_Main_Brain/services/data_sync_manager.py`
-- **Integration**: `Suzlon_Copilot_Main_Brain/main.py` (lines ~1-70)
-- **Migration**: `Suzlon_Copilot_Main_Brain/run_migration.py`
+- **Service**: `AIBI_Copilot_Main_Brain/services/data_sync_manager.py`
+- **Integration**: `AIBI_Copilot_Main_Brain/main.py` (lines ~1-70)
+- **Migration**: `AIBI_Copilot_Main_Brain/run_migration.py`
 
 ### Documentation Files
 - **Full Guide**: `DATA_SYNC_IMPLEMENTATION_GUIDE.md`
@@ -130,8 +130,8 @@ self.batch_size = 100  # 50 → 100
 - **Quick Start**: `QUICK_START_DATA_SYNC.sh` (executable)
 
 ### Test Files
-- **Test Suite**: `Suzlon_Copilot_Main_Brain/test_data_sync.py`
-- **Database Migration**: `Suzlon_Copilot_Main_Brain/migration_data_sync.sh` (executable)
+- **Test Suite**: `AIBI_Copilot_Main_Brain/test_data_sync.py`
+- **Database Migration**: `AIBI_Copilot_Main_Brain/migration_data_sync.sh` (executable)
 
 ---
 
@@ -141,7 +141,7 @@ self.batch_size = 100  # 50 → 100
 |---------|---------|----------|---------------|
 | Sync Interval | 300s (5 min) | `services/data_sync_manager.py` line 20 | `self.sync_interval = X` |
 | Batch Size | 50 docs | `services/data_sync_manager.py` line 21 | `self.batch_size = X` |
-| Service Name | "suzlon-copilot-main-brain" | `services/data_sync_manager.py` line 22 | `self.service_name = "X"` |
+| Service Name | "AIBI-copilot-main-brain" | `services/data_sync_manager.py` line 22 | `self.service_name = "X"` |
 | Database | From `.env` | `config.py` | Update `.env` file |
 
 ---
@@ -196,7 +196,7 @@ Or create a monitor script:
 #!/bin/bash
 while true; do
   clear
-  echo "=== Suzlon Data Sync Monitor ==="
+  echo "=== AIBI Data Sync Monitor ==="
   curl -s http://localhost:8000/api/v1/admin/sync/status | jq '.statistics'
   sleep 5
 done
@@ -219,12 +219,12 @@ curl http://localhost:8000/health | jq '.status'
 
 ### View Real-time Logs
 ```bash
-tail -f logs/suzlon-copilot-main-brain.log | grep -E "🔄|✅|❌"
+tail -f logs/AIBI-copilot-main-brain.log | grep -E "🔄|✅|❌"
 ```
 
 ### Database Health Check
 ```bash
-psql -h localhost -d suzlon_copilot -c "
+psql -h localhost -d AIBI_copilot -c "
   SELECT 
     (SELECT COUNT(*) FROM csv_documents) as total_docs,
     (SELECT COUNT(*) FROM csv_documents WHERE is_processed_by_rag) as processed,
@@ -302,12 +302,12 @@ psql -h localhost -d suzlon_copilot -c "
 
 3. **Log Analysis**
    ```bash
-   grep "Documents processed" logs/suzlon-copilot-main-brain.log | tail -10
+   grep "Documents processed" logs/AIBI-copilot-main-brain.log | tail -10
    ```
 
 4. **Database Cleanup** (if needed)
    ```bash
-   psql -h localhost -d suzlon_copilot -c "
+   psql -h localhost -d AIBI_copilot -c "
      DELETE FROM csv_documents WHERE created_at < NOW() - INTERVAL '30 days';"
    ```
 
@@ -318,7 +318,7 @@ psql -h localhost -d suzlon_copilot -c "
 - **Issues?** Check `DATA_SYNC_IMPLEMENTATION_GUIDE.md` - Troubleshooting section
 - **Configuration?** See `DATA_SYNC_ARCHITECTURE_DETAILS.md` - Configuration section
 - **Deployment?** Follow `DEPLOYMENT_CHECKLIST_DATA_SYNC.md`
-- **Error?** Check logs: `tail -100 logs/suzlon-copilot-main-brain.log`
+- **Error?** Check logs: `tail -100 logs/AIBI-copilot-main-brain.log`
 
 ---
 

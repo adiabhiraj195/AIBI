@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ============================================================
-# Suzlon Developer Helper Script
+# AIBI Developer Helper Script
 # Common tasks for local development
 # Usage: ./dev.sh [command]
 # ============================================================
@@ -39,7 +39,7 @@ case "$1" in
   # Access database
   db)
     echo "Connecting to PostgreSQL database..."
-    docker compose exec database psql -U suzlon_user -d Suzlon_Backend
+    docker compose exec database psql -U AIBI_user -d AIBI_Backend
     ;;
   
   # Access Redis
@@ -51,7 +51,7 @@ case "$1" in
   # Database stats
   db-stats)
     echo "Database Statistics:"
-    docker compose exec database psql -U suzlon_user -d Suzlon_Backend \
+    docker compose exec database psql -U AIBI_user -d AIBI_Backend \
       -c "SELECT schemaname, tablename, pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) AS size FROM pg_tables ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;"
     ;;
   
@@ -106,7 +106,7 @@ case "$1" in
   # Help
   help|'')
     cat << 'EOF'
-Suzlon Developer Helper
+AIBI Developer Helper
 
 Usage: ./dev.sh [command] [options]
 

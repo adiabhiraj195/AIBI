@@ -185,7 +185,7 @@ curl "http://localhost:8001/api/v1/metadata/registry/summary"
 ## File Organization
 
 ```
-Suzlon_backend/
+AIBI_backend/
 ├── app/
 │   ├── models/
 │   │   └── database_models.py (MODIFIED - Added FileRegistry)

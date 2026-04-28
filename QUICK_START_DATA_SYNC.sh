@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 echo -e "${BLUE}"
 echo "╔════════════════════════════════════════════════════════════╗"
-echo "║     Suzlon Data Sync Implementation Quick Start            ║"
+echo "║     AIBI Data Sync Implementation Quick Start            ║"
 echo "╚════════════════════════════════════════════════════════════╝"
 echo -e "${NC}\n"
 
@@ -33,7 +33,7 @@ fi
 
 # Step 2: Navigate to Main Brain directory
 echo -e "\n${YELLOW}Step 2: Setting up working directory...${NC}"
-MAIN_BRAIN_DIR="/Users/abhi/Documents/Nspark/Suzlon_Copilot_Main_Brain"
+MAIN_BRAIN_DIR="/Users/abhi/Documents/Nspark/AIBI_Copilot_Main_Brain"
 if [ ! -d "$MAIN_BRAIN_DIR" ]; then
     echo -e "${RED}❌ Directory not found: $MAIN_BRAIN_DIR${NC}"
     exit 1
@@ -93,7 +93,7 @@ echo "1️⃣  Start the Main Brain service:"
 echo -e "   ${BLUE}python main.py${NC}\n"
 
 echo "2️⃣  In another terminal, start the Backend service:"
-echo -e "   ${BLUE}cd ../Suzlon_backend && python main.py${NC}\n"
+echo -e "   ${BLUE}cd ../AIBI_backend && python main.py${NC}\n"
 
 echo "3️⃣  Verify sync status:"
 echo -e "   ${BLUE}curl http://localhost:8000/api/v1/admin/sync/status | jq .${NC}\n"
